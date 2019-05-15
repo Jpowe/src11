@@ -1,0 +1,6 @@
+.trigger {
+  opacity: 0;
+}
+.itemRow:hover .trigger {
+  opacity: 1;
+}

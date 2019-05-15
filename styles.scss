@@ -1,0 +1,51 @@
+html {
+  font-family: sans-serif, "Roboto";
+  -webkit-font-smoothing: antialiased;
+}
+
+body,
+h4 {
+  font-size: 28px;
+  margin: 0;
+}
+h5,
+h6,
+h1 {
+  font-size: 22px;
+  margin: 0;
+}
+h2 {
+  font-size: 20px;
+  margin: 0;
+  line-height: 24px;
+}
+h3 {
+  font-size: 18px;
+  margin: 0;
+  line-height: 24px;
+}
+
+body {
+  margin: 0;
+  background-color: #efefef;
+}
+
+body,
+html,
+#app,
+#app > div {
+  height: 100%;
+}
+
+a {
+  /*color: #ff4081;*/
+  text-decoration: none;
+}
+
+a:hover {
+  /*text-decoration: underline;*/
+}
+
+.m-b-15 {
+  margin-bottom: 15px;
+}

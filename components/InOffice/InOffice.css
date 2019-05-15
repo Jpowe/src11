@@ -1,0 +1,6 @@
+.svg_icons-large-screen {
+  transform: scale(1.2);
+}
+.svg_icons-small-screen {
+  transform: scale(2);
+}

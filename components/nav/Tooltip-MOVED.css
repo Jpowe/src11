@@ -1,0 +1,60 @@
+[tooltip] {
+  margin: 0px 0px;
+  position: relative;
+  display: inline-block;
+}
+[tooltip]::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 4px 6px 0 6px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.9) transparent transparent transparent;
+  z-index: 99;
+  opacity: 0;
+}
+
+[tooltip-position="bottom"]::before {
+  top: 100%;
+  margin-top: 8px;
+  transform: translateX(-50%) translatey(-100%) rotate(-180deg);
+}
+
+[tooltip]::after {
+  content: attr(tooltip);
+  position: absolute;
+  left: 50%;
+  top: -6px;
+  transform: translateX(-50%) translateY(-100%);
+  background: rgba(223, 92, 51, 0.9);
+  text-align: center;
+  color: #fff;
+  padding: 6px 3px;
+  font-size: 18px;
+  min-width: 80px;
+  border-radius: 5px;
+  pointer-events: none;
+  padding: 4px 4px;
+  z-index: 99;
+  opacity: 0;
+}
+
+[tooltip-position="bottom"]::after {
+  top: 100%;
+  margin-top: 8px;
+  transform: translateX(-50%) translateY(0%);
+}
+
+[tooltip]:hover::after,
+[tooltip]:hover::before {
+  opacity: 1;
+}
+
+[tooltip-position="left"]::after {
+  top: 100%;
+  margin-top: 8px;
+  transform: translateX(-120%) translateY(-60%);
+  z-index: 100;
+}

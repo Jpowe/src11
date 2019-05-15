@@ -1,0 +1,71 @@
+.paginated {
+  margin-right: 16px;
+  font-size: large;
+}
+.paginated-group {
+  margin-right: 50px;
+  display: flex;
+}
+.pointer {
+  cursor: pointer;
+}
+.arrows {
+  font-size: 30px;
+}
+
+.target-fade-blue {
+  -webkit-animation: target-fade-blue 3s 1;
+  -moz-animation: target-fade-blue 3s 1;
+}
+
+@-webkit-keyframes target-fade-blue {
+  0% {
+    background-color: rgba(245, 140, 50, 1);
+  }
+  33% {
+    background-color: rgba(245, 140, 50, 1);
+  }
+  100% {
+    background-color: rgba(164, 174, 203, 1);
+  }
+}
+
+@-moz-keyframes target-fade-blue {
+  0% {
+    background-color: rgba(245, 140, 50, 1);
+  }
+  33% {
+    background-color: rgba(245, 140, 50, 1);
+  }
+  100% {
+    background-color: rgba(164, 174, 203, 1);
+  }
+}
+.target-fade-grey {
+  -webkit-animation: target-fade-grey 3s 1;
+  -moz-animation: target-fade-grey 3s 1;
+}
+
+@-webkit-keyframes target-fade-grey {
+  0% {
+    background-color: rgba(245, 140, 50, 1);
+  }
+  33% {
+    background-color: rgba(245, 140, 50, 1);
+  }
+  100% {
+    background-color: rgba(224, 224, 224, 1);
+  }
+}
+
+@-moz-keyframes target-fade-grey {
+  0% {
+    background-color: rgba(245, 140, 50, 1);
+  }
+  33% {
+    background-color: rgba(245, 140, 50, 1);
+  }
+  100% {
+    background-color: rgba(224, 224, 224, 1);
+  }
+}

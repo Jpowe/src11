@@ -1,0 +1,100 @@
+.App {
+  text-align: center;
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.todoitemA {
+  width: 200px;
+  height: 30px;
+  box-sizing: border-box;
+  color: white;
+  opacity: 1;
+  margin-left: 10px;
+  margin-top: 5px;
+  padding: 10px;
+  transform: translate(0px, 0px);
+  transition: height 0.1s ease, transform 1.5s ease, opacity 1s ease;
+  transition-delay: 0s;
+}
+
+.todoitemB {
+  width: 200px;
+  height: 30px;
+  box-sizing: border-box;
+  color: white;
+  opacity: 1;
+  margin-left: 10px;
+  margin-top: 5px;
+  padding: 10px;
+  transform: translate(0px, 0px);
+  transition: height 1s ease, transform 0.5s ease, opacity 1s ease;
+  transition-delay: 1s;
+}
+.todoitemC {
+  width: 200px;
+  height: 30px;
+  box-sizing: border-box;
+  color: white;
+  opacity: 1;
+  margin-left: 10px;
+  margin-top: 5px;
+  padding: 10px;
+  transform: translate(-100px, 0px);
+  transition: transform 1.1s ease;
+}
+
+.hide1A {
+  width: 2px;
+  height: 0px;
+  background-color: lightyellow;
+  border: solid 0px lightblue;
+  box-sizing: border-box;
+  color: white;
+  opacity: 0;
+  transform: translate(-200px, 0px);
+  transition: height 0.5s ease, width 0.5s ease, opacity 0.5s ease,
+    background-color 0.5s ease, transform 1s ease;
+  /*transition-delay: 11s;*/
+}
+
+.selectedA {
+  transform: translate(-100px, 0px);
+  transition: transform 1s ease;
+  transition-delay: 0.3s;
+}
+.selectedA2 {
+  transform: translate(-75px, 0px);
+  transition: transform 1s ease;
+  transition-delay: 0.3s;
+}
+.selectedB {
+  transform: translate(0px, 0px);
+  transition: transform 1.1s ease;
+  transition-delay: 0.3s;
+}
+.current {
+  /*margin-left: 20px*/
+}
+.levelStartA {
+  /*
+  opacity: 1;
+  transform: translate(20px, 0px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+  transition-delay: 0.01s;
+  */
+}
+.levelEndA {
+  transform: translate(0px, 0px);
+  transition: transform 0.1s ease;
+  transition-delay: 0.05s;
+}
+.toggle {
+  opacity: 0;
+}

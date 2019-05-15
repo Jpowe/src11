@@ -1,0 +1,47 @@
+.container {
+  position: relative;
+
+}
+.container:hover {
+  opacity: .55;
+}
+.container:hover .overlay {
+  opacity: 1;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: auto;
+  width: 90px;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: black;
+  padding: 4px;
+  color:white;
+  border-radius: 15px;
+}
+.overlayNotify {
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  right: -311px;
+  height: 120px;
+  width: 23vw;
+  opacity: .9;
+  transform: translate(-305px, 0px);
+  transition: transform 1.5s ease;
+  padding: 4px;
+  color:white;
+  z-index: 1200;
+}
+
+
+
+
+
+.container:hover .overlay {
+    opacity: 1;
+}

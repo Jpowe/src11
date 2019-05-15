@@ -1,0 +1,34 @@
+.paginated {
+  margin-right: 16px;
+  font-size: large;
+}
+.paginated-group {
+  margin-right: 50px;
+  display: flex;
+}
+.pointer {
+  cursor: pointer;
+}
+.arrows {
+  font-size: 30px;
+}
+
+/*
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 1500ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+*/

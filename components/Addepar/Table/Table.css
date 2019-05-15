@@ -1,0 +1,14 @@
+.paginated {
+  margin-right: 16px;
+  font-size: large;
+}
+.paginated-group {
+  margin-right: 50px;
+  display: flex;
+}
+.pointer {
+  cursor: pointer;
+}
+.arrows {
+  font-size: 30px;
+}

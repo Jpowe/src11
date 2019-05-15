@@ -1,0 +1,91 @@
+.todoitem {
+  width: 300px;
+  height: 120px;
+ background-color:lightblue;
+  /*float: left;*/
+  /*border: solid 2px black;*/
+  box-sizing: border-box;
+  color:white;
+  opacity:1;
+  margin: 10px;
+  padding: 5px;
+  transform: translate(0px, 0px);
+  transition:   transform 1.1s ease, opacity 3s ease;
+  transition-delay: 0.3s;
+
+}
+.hide1 {
+  width: 2px;
+  height: 0px;
+  background-color: lightyellow;
+  border: solid 0px lightblue;
+  box-sizing: border-box;
+  color:white;
+  opacity: 0.0;
+    transform: translate(-200px, 0px);
+  transition: height 0.5s ease, width 0.5s ease, opacity 0.5s ease,  background-color 0.5s ease,transform 0.5s ease,;
+  /*transition-delay: 11s;*/
+}
+
+
+.selected {
+    color: blue;
+    font-size: 12px;
+    font-style: italic;
+}
+.current {
+    /*margin-left: 20px*/
+}
+.levelStart {
+  opacity: 1;
+  transform: translate(50px, 0px);
+  transition:  opacity 0.9s ease, transform 0.9s ease;
+  transition-delay: .01s;
+
+}
+.levelEnd {
+  transform: translate(0px, 0px);
+  transition:    transform 0.1s ease;
+  transition-delay: .05s;
+}
+.todoitem.success{
+  background-color: #E8F5E9;
+    border-top: solid 2px green;
+    color: green
+}
+.todoitem.error {
+  background-color:#FFEBEE;
+    border-top: solid 2px red;
+    color: red
+}
+.todoitem.warning {
+    background-color: #FFFDE7;
+    border-top: solid 2px #F9A825;
+    color: #F9A825
+}
+.todoitem.info {
+    background-color: #E3F2FD;
+    border-top: solid 2px blue;
+    color: blue
+}
+.example-enter {
+  opacity: 0.01;
+  width: 0px;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  height: 100px;
+  transition: 700ms;
+}
+
+.example-leave {
+  opacity: 1;
+  height: 80px;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  height: 0px;
+  transition: 900ms;
+}

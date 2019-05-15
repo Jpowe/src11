@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+a {
+  /*color: #ff4081;*/
+  text-decoration: none;
+}
+.svg_icons-large-screen {
+  transform: scale(1.2);
+}
+.svg_icons-small-screen {
+  transform: scale(2);
+}

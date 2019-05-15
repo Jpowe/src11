@@ -1,0 +1,12 @@
+{
+  "oVariableDefaultValues": {
+    "txtFirstName": "first",
+    "txtLastName": "last",
+    "ddlState": "1",
+    "txtSsn": "123-45-6789",
+    "dtDob": "1/2/34",
+    "dtDateOfHire": "1/2/35",
+    "txtJobTitle": "ceo"
+  },
+  "oGlobalDefaultValues": {}
+}
