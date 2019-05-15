@@ -30,7 +30,7 @@ class App extends React.Component {
       flyoutEnabled: false,
       modalOpen: true
     };
-    console.log(" PORTAL: 05/13/2019 318");
+    console.log(" PORTAL: 05/15/2019 922");
   }
   componentDidMount() {
     if (window.innerWidth > 1000) {
