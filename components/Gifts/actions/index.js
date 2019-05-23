@@ -21,6 +21,8 @@ export const SET_VAR_GIFT_LOG2 = "SET_VAR_GIFT_LOG2";
 export const GIFT_LOG_ADD_GIFT_EVENTS = "GIFT_LOG_ADD_GIFT_EVENTS";
 export const GIFT_LOG_UPDATE_GIFT_EVENT = "GIFT_LOG_UPDATE_GIFT_EVENT";
 export const GIFT_LOG_HIERARCHY = "GIFT_LOG_HIERARCHY";
+//export const GIFT_LOG_UPDATE_STATE_GIFTS = "GIFT_LOG_UPDATE_STATE_GIFTS";
+//export const TEST = "TEST";
 
 /***** utils : utils.js not working?*/
 /*
@@ -846,12 +848,14 @@ export const getGiftEventsByMonth = (filter = "12") => async (
   let mainFilter;
   const token = getState().notifications.token;
   mainFilter = filter ? filter : getState().glogInput.mainFilter;
+  dispatch(setVar("monthFilter", filter));
   dispatch(setVar("loading", true));
   console.time("http-get-gifts");
   const ge2 = await HTTP_GIFT_LOG.getGiftEvents2(token, mainFilter);
   console.timeEnd("http-get-gifts");
   dispatch(setVar("loading", false));
   let rows = R.flatten(R.map(parseGiftEventToGiftRequest2D, ge2.GiftEvents));
+  console.table(rows);
   rows = R.map(parseGiftRequest2D, rows);
   console.table(rows);
   rows = R.filter(x => x.registryStatus !== "No", rows);
@@ -862,22 +866,106 @@ export const getGiftEventsByMonth = (filter = "12") => async (
   console.table(rows);
   dispatch(setVar("gifts", rows));
 
-  const ge = await HTTP_GIFT_LOG.getGiftEvents2(token, mainFilter);
-  console.table(ge.GiftEvents);
-  dispatch(addGiftEvents(ge.GiftEvents));
+  //  const ge = await HTTP_GIFT_LOG.getGiftEvents2(token, mainFilter);
+  //  console.table(ge.GiftEvents);
+  dispatch(addGiftEvents(ge2.GiftEvents));
 };
+/*
+export const updateStateGifts = (id, payload) => ({
+  type: GIFT_LOG_UPDATE_STATE_GIFTS,
+  id: id,
+  payload: payload
+});
+export const test = () => ({
+  type: "TEST"
+});
+*/
 /* used by gift module */
-export const saveFormGift2 = payload => async (dispatch, getState) => {
+export const saveFormGift2 = (payload, create) => async (
+  dispatch,
+  getState
+) => {
   console.log("ACTION saveFormGift2 f");
   let newItem, id;
   const token = getState().notifications.token;
   const {
     currentGiftEvent,
     giftEvents,
-    currentGiftRequest
+    currentGiftRequest,
+    gifts
   } = getState().giftLog;
-
   let ge = R.find(x => x.uuid === currentGiftEvent, giftEvents);
+  const giftExists = ge => {
+    const { eventGiftRequests } = ge;
+    console.log(
+      R.prop(
+        "uuid",
+        R.find(x => x.uuid === currentGiftRequest, eventGiftRequests)
+      )
+    );
+    const gr = R.find(x => x.uuid === currentGiftRequest, eventGiftRequests);
+    try {
+      const giftID = R.prop(
+        "uuid",
+        R.prop(
+          "gift",
+          R.find(x => x.giftYear == "2019", R.prop("requestGifts", gr))
+        )
+      );
+
+      //const giftID = R.path(["requestGifts", 0, "gift", "uuid"], gr);
+      console.log("GIFT ID : " + giftID);
+      return giftID;
+    } catch (e) {
+      console.log("NO PREVIOUS CURRENT GIFT " + e.message);
+      return null;
+    }
+  };
+  id = giftExists(ge);
+
+  if (create) {
+    const tempJSON = {
+      value: 0,
+      description: ``,
+      giftNotes: ""
+    };
+    newItem = await HTTP_GIFT_LOG.createGift(token, tempJSON);
+    id = R.prop("uuid", newItem.CreateGift);
+    console.log("newGift uuid " + R.prop("uuid", newItem.CreateGift));
+    let dte = new Date();
+    await HTTP_GIFT_LOG.createGiftRequestGift(token, currentGiftRequest, id, {
+      giftYear: String(dte.getFullYear())
+    });
+  } else {
+    newItem = await HTTP_GIFT_LOG.updateGift(token, id, payload);
+    console.log("newITEM id " + newItem.uuid);
+    /*
+    * UPDATE STATE.GIFT WITH TWO FIELDS gift 19 and notes 19 == descriptin and giftNotes
+     param id and payload of {gift19:R.prop('description',payload),gift19notes:R.prop('giftNotes',payload)}
+    */
+
+    const syncToGifts = R.map(
+      x =>
+        x.id === currentGiftRequest
+          ? {
+              ...x,
+              gift19: R.prop("description", payload),
+              gift19notes: R.prop("giftNotes", payload)
+            }
+          : x,
+      gifts
+    );
+
+    dispatch(setVar("gifts", syncToGifts));
+  }
+
+  const giftEvent = await HTTP_GIFT_LOG.getGiftEvent(token, R.prop("uuid", ge));
+  dispatch(updateGiftEvent(giftEvent.GiftEvent, "giftEvents"));
+
+  //  dispatch(getGiftEventsByMonth(getState().giftLog.monthFilter));
+
+  /*
+
   const giftExists = ge => {
     const { eventGiftRequests } = ge;
     console.log(
@@ -909,7 +997,7 @@ export const saveFormGift2 = payload => async (dispatch, getState) => {
   id = giftExists(ge);
 
   const tempJSON = {
-    value: 1,
+    value: 0,
     description: `placeholder`,
     giftNotes: ""
   };
@@ -923,7 +1011,7 @@ export const saveFormGift2 = payload => async (dispatch, getState) => {
     await HTTP_GIFT_LOG.createGiftRequestGift(token, currentGiftRequest, id, {
       giftYear: String(dte.getFullYear())
     });
-    /* HACK createGift does not attach 'assignedTo'   */
+
     newItem = await HTTP_GIFT_LOG.updateGift(token, id, combineObj);
   } else {
     newItem = await HTTP_GIFT_LOG.updateGift(token, id, combineObj);
@@ -931,6 +1019,7 @@ export const saveFormGift2 = payload => async (dispatch, getState) => {
 
   const giftEvent = await HTTP_GIFT_LOG.getGiftEvent(token, R.prop("uuid", ge));
   dispatch(updateGiftEvent(giftEvent.GiftEvent, "giftEvents"));
+  */
 };
 
 /* used by GE-GR module */

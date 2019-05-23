@@ -10,7 +10,7 @@ class ColumnRow extends Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, colWidth } = this.props;
 
     return (
       <div
@@ -18,14 +18,14 @@ class ColumnRow extends Component {
           display: "flex",
           minHeight: "30px",
           padding: "8px",
-          justifyContent: "space-between",
+          //  justifyContent: "space-between",
           alignItems: "flex-end",
           color: "#fff",
           backgroundColor: "#aaa"
         }}
       >
         {data.map(x => (
-          <div>{x}</div>
+          <div style={{ width: colWidth }}>{x}</div>
         ))}
       </div>
     );

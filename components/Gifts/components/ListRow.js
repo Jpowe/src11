@@ -9,7 +9,7 @@ class ListRow extends Component {
   componentDidMount() {}
 
   render() {
-    const { data, rowNum } = this.props;
+    const { data, rowNum, colWidth } = this.props;
     const getColor = n => (n % 2 === 0 ? "#e6e6e6" : "#cccccc");
     return (
       <div
@@ -17,14 +17,13 @@ class ListRow extends Component {
           display: "flex",
           minHeight: "30px",
           padding: "8px",
-          justifyContent: "space-between",
+          //justifyContent: "space-between",
           alignItems: "flex-end",
-
           backgroundColor: getColor(rowNum)
         }}
       >
         {Object.keys(data).map(x => (
-          <div>{data[x]}</div>
+          <div style={{ width: colWidth }}>{data[x]}</div>
         ))}
       </div>
     );

@@ -209,15 +209,20 @@ class Form extends Component {
     let data = this.state.data;
     console.table(data);
     console.table(obj);
-    this.setState({ data: { ...data, location: obj } });
-    this.props.onAddLoc(obj, node, bool, this.props.gift);
     const newObj = {
       name: R.prop("streetAddress1", obj),
       title: R.prop("streetAddress1", obj),
       value: R.prop("placeID", obj)
     };
-    const locations = this.state.locations;
-    this.setState({ locations: [newObj, ...locations] });
+    this.setState({ data: { ...data, location: obj }, locations: [newObj] });
+    this.props.onAddLoc(obj, node, bool, this.props.gift);
+
+    console.log(JSON.stringify(this.state.locations));
+    if (this.state.locations) {
+      const locations = this.state.locations;
+      this.setState({ locations: [newObj, ...locations] });
+    }
+    this.setState({ saveEnabled: true });
     //this.setState({ location: R.prop("placeID", newObj) });
   };
   changeDeliveryLoc = id => {
@@ -229,7 +234,7 @@ class Form extends Component {
     const loc = R.find(x => x.value === id, this.state.locations);
     console.table(loc);
     this.setState({ data: { ...data, location: loc } });
-
+    this.setState({ saveEnabled: true });
     //  this.props.onAddLoc(obj, node, bool, this.props.gift);
   };
   render() {
@@ -284,7 +289,7 @@ class Form extends Component {
                           marginTop: "10px"
                         }}
                       >
-                        {x.title}
+                        {x.required ? `${x.title} *` : x.title}
                       </div>
                       <FieldDropDown
                         options={x.options}
@@ -303,7 +308,7 @@ class Form extends Component {
                           marginTop: "10px"
                         }}
                       >
-                        {x.title}
+                        {x.required ? `${x.title} *` : x.title}
                       </div>
                       <AutoComplete
                         hintText="Select  "
@@ -338,7 +343,7 @@ class Form extends Component {
                           marginTop: "10px"
                         }}
                       >
-                        {x.title}
+                        {x.required ? `${x.title} *` : x.title}
                       </div>
                       <LocationComponent
                         data={this.props.data}

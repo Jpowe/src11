@@ -150,7 +150,7 @@ class FormContainerPerson extends Component {
     } catch (e) {
       console.log("CATCH " + e.message);
     }
-    let returnObj = { ...emptyObj, ...obj, birthDate: newDate };
+    let returnObj = { ...emptyObj, ...obj, birthDate: newDate ? newDate : "." };
     console.log(JSON.stringify(returnObj));
     console.table(returnObj);
     return returnObj;

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import * as R from "ramda";
 import { connect } from "react-redux";
-import { saveFormRequest } from "../../actions";
+import { saveFormRequest, setVar } from "../../actions";
 import { getCurrentRequest } from "../../reducers";
 
 import Form from "./Form";
@@ -16,7 +16,9 @@ class FormContainerRequest extends Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.setVar("currentGiftRequest", null);
+  }
   addOptions(rows) {
     let rows2;
     const allOptions = [
@@ -112,6 +114,8 @@ class FormContainerRequest extends Component {
           data={this.props.data}
           onSave={this.save}
           formGiftEvent={false}
+          showNew={this.props.currentRequestID}
+          onNew={this.props.setVar}
         />
       </div>
     );
@@ -119,11 +123,16 @@ class FormContainerRequest extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  data: getCurrentRequest(state)
+  data: getCurrentRequest(state),
+  currentRequestID: state.giftLog.currentGiftRequest ? true : false
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
   saveForm: obj => {
     dispatch(saveFormRequest(obj));
+  },
+  setVar: () => {
+    console.log("FCR setVar");
+    dispatch(setVar("currentGiftRequest", null));
   }
 });
 

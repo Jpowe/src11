@@ -94,7 +94,7 @@ export default class MyGeoSuggest extends Component {
           />
         </div>
         <RaisedButton
-          label="Save address"
+          label="Add address"
           primary={true}
           onClick={this.handleSubmit}
           style={{ margin: 8 }}

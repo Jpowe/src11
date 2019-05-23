@@ -20,15 +20,14 @@ class Form extends Component {
     this.state = {
       saveEnabled: false,
       title: this.props.title,
-      data: this.props.data
-      //searchText: this.props.formGiftEvent ? this.props.data.eventType[0] : ""
+      data: this.props.data,
+      searchText: this.props.data ? R.prop("eventType", this.props.data) : ""
     };
   }
   componentDidMount() {
     console.table(this.props.data);
     this.state = {
       data: this.props.data
-      //searchText: this.props.formGiftEvent ? this.props.data.eventType[0] : ""
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -68,7 +67,7 @@ class Form extends Component {
         const { eventDay, eventMonth } = this.props.data;
         return `${eventMonth} ${eventDay}`;
       }
-      return fld;
+      return fld !== undefined ? fld : "";
     } catch (e) {
       console.log("CATCH " + e.message);
     }
@@ -127,9 +126,13 @@ class Form extends Component {
 
   handleUpdateInput = searchText => {
     console.log("EVENTS.js handleUpdateInput " + searchText);
-    this.setState({
-      searchText: searchText
-    });
+    try {
+      this.setState({
+        searchText: searchText
+      });
+    } catch (e) {
+      console.log("CATCH " + e.message);
+    }
   };
   handleNewRequest = (str, i) => {
     console.log("handleNewRequest f " + [str, i]);
@@ -192,6 +195,11 @@ class Form extends Component {
   getWidth = prop => {
     return prop ? prop : "400px";
   };
+
+  saveEnabledTrue = obj => {
+    this.setState({ saveEnabled: true });
+    return obj;
+  };
   render() {
     const { fields, showNew } = this.props;
     return (
@@ -250,7 +258,9 @@ class Form extends Component {
                         options={x.options}
                         status={this.getValueDD(x, this.props.data)}
                         //data={ }
-                        onselect={value => this.childChange(value, x.name)}
+                        onselect={value =>
+                          this.saveEnabledTrue(this.childChange(value, x.name))
+                        }
                       />
                     </div>
                   ) : x.uiType === "autoComplete" ? (
@@ -268,15 +278,13 @@ class Form extends Component {
                       <AutoComplete
                         hintText="Select gift event type"
                         searchText={
-                          this.state.searchText
-                            ? this.state.searchText
-                            : this.getValue(x)
+                          this.state.searchText ? this.state.searchText : ""
                         }
-                        onUpdateInput={this.handleUpdateInput}
+                        onUpdateInput={txt => this.handleUpdateInput(txt)}
                         onNewRequest={str => this.handleNewRequest(x.name, str)}
                         dataSource={x.options}
                         //filter={(searchText, key) => key.indexOf(searchText) !== -1}
-                        filter={AutoComplete.fuzzyFilter}
+                        //  filter={AutoComplete.fuzzyFilter}
                         openOnFocus={true}
                         name={x.name}
                         style={{ marginLeft: "4px" }}

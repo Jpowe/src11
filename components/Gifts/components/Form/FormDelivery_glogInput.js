@@ -193,11 +193,14 @@ class FormDelivery extends Component {
     console.log("check " + data);
     return data;
   };
-  showItems = () => {
-    if (!this.props.locations) {
+  showItems = locations => {
+    console.log("FDG showItems ");
+    console.log(locations);
+
+    if (!locations) {
       return;
     }
-    const uniqVals = R.uniqBy(R.prop("value"), this.props.locations);
+    const uniqVals = R.uniqBy(R.prop("value"), locations);
     return R.map(
       x => <MenuItem value={x.value} primaryText={x.title} />,
       uniqVals
@@ -227,24 +230,15 @@ class FormDelivery extends Component {
                   left: "-20px"
                 }}
               >
-                {this.showItems()}
+                {this.showItems(locations)}
               </DropDownMenu>
-            </div>
-
-            <div style={{ margin: "10px 20px 0px 0px" }}>
-              <ButtonAction
-                mini={true}
-                onClick={() => this.setState({ showNew: !this.state.showNew })}
-              >
-                <ContentAdd />
-              </ButtonAction>
             </div>
           </div>
           {this.state.showNew && (
             <div>
               <div style={{ margin: "20px 20px 0px 0px" }}>
                 <Checkbox
-                  label="International"
+                  label="International/manual"
                   onClick={() =>
                     this.setState({ showIntl: !this.state.showIntl })
                   }

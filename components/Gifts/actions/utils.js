@@ -26,14 +26,25 @@ export const parseGiftEventToGiftRequest2D = obj => {
   const eventMonth = R.prop("eventMonth", obj);
   const eventDay = R.prop("eventDay", obj);
 
-  const partyFirst = R.path(["eventPersons", 0, "firstName"], obj);
-  const partyLast = R.path(["eventPersons", 0, "lastName"], obj);
-  const party = `${partyFirst} ${partyLast}`;
+  const createParty = x => {
+    console.log(JSON.stringify(x));
+    const partyFirst = R.prop("firstName", x);
+    console.log(partyFirst);
+    const partyLast = R.prop("lastName", x);
+    console.log(partyLast);
+    const party = `${partyFirst} ${partyLast}`;
+    console.log(party);
+    return party;
+  };
+  console.table(R.prop("eventPersons", obj));
+  let parties = R.map(x => createParty(x), R.prop("eventPersons", obj));
+  console.table(parties);
+
   let newRows = [];
   const createRequestRow = req => {
     let newObj = {
       eventType: eventType,
-      party: party,
+      geParties: parties,
       request: req,
       eventMonth: eventMonth,
       eventDay: eventDay,
@@ -54,13 +65,28 @@ export const parseGiftRequest2D = obj => {
     const eventType = R.prop("eventType", obj);
     const eventMonth = R.prop("eventMonth", obj);
     const eventDay = R.prop("eventDay", obj);
+    const geParties = R.prop("geParties", obj);
 
-    const party = R.prop("party", obj);
+    //  const party = R.prop("party", obj);
     let request = R.prop("request", obj);
+
+    const createParty = x => {
+      console.log(JSON.stringify(x));
+      const partyFirst = R.prop("firstName", x);
+      console.log(partyFirst);
+      const partyLast = R.prop("lastName", x);
+      console.log(partyLast);
+      const party = `${partyFirst} ${partyLast}`;
+      console.log(party);
+      return party;
+    };
+    let parties = R.map(x => createParty(x), R.prop("requestPersons", request));
+
     let newObj = {
       eventType: eventType,
       eventDate: `${eventMonth}/${eventDay}`,
-      party: party,
+      party: parties,
+      geParties: geParties,
       request: R.prop("requestNotes", request),
       id: R.prop("uuid", request),
       geUUID: geUUID,
@@ -145,6 +171,7 @@ export const parseGiftRequest2D = obj => {
         giftUUID: gift19UUID
       };
     }
+    console.table(newObj);
     return newObj;
   } catch (e) {
     console.log("CATCH " + e.message);

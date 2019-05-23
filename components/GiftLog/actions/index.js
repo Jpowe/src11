@@ -664,7 +664,8 @@ export const saveFormRequest = payload => async (dispatch, getState) => {
     console.log("!currentGiftRequest");
     gr = await HTTP_GIFT_LOG.createGiftRequest(token, payload);
     let id = R.prop("uuid", gr.CreateGiftRequest);
-    dispatch(setVar("currentGiftRequest", R.prop("uuid", id)));
+    console.log("id " + id);
+    dispatch(setVar("currentGiftRequest", id));
     let newAttach = await HTTP_GIFT_LOG.createGiftEventGiftRequest(
       token,
       currentGiftEvent,
@@ -677,6 +678,7 @@ export const saveFormRequest = payload => async (dispatch, getState) => {
       currentGiftRequest,
       R.pick(["requestNotes", "active", "registryStatus"], payload)
     );
+    dispatch(setVar("currentGiftRequest", currentGiftRequest));
   }
   console.log("currentGiftevent1 " + currentGiftEvent);
   dispatch(loadGiftEvent(currentGiftEvent));
@@ -689,9 +691,23 @@ export const saveFormPerson = payload => async (dispatch, getState) => {
   console.log("selectedPerson: " + selectedPerson);
   // IF Selected person , HTTP UPDATE, else HTTP create
   const token = getState().notifications.token;
+  const getGenderName = n => {
+    if (!n) {
+      return { name: "Unknown", value: 3 };
+    }
+    const genderJSON = [
+      { name: "Female", value: 1 },
+      { name: "Male", value: 2 },
+      { name: "Unknown", value: 3 }
+    ];
+    if (!!R.find(x => x.value == n, genderJSON)) {
+      return R.prop("name", R.find(x => x.value == n, genderJSON));
+    }
+  };
   let newPayload = {
     ...payload,
-    birthDate: formatDateYYMMDD(payload.birthDate)
+    birthDate: formatDateYYMMDD(payload.birthDate),
+    gender: getGenderName(payload.gender)
   };
   if (selectedPerson) {
     await HTTP_GIFT_LOG.updatePerson(token, selectedPerson, newPayload);

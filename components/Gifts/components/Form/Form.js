@@ -49,26 +49,34 @@ class Form extends Component {
   onSave = () => {
     this.handleSave();
   };
-  getValue = (z, data) => {
+  getValue = (z, data = null) => {
     try {
       console.table(this.props.data);
+
       let field = R.prop("name", z);
+      if (field == "value") {
+        console.table(z);
+      }
       console.log("field " + field);
       let fld = R.prop(field, this.props.data);
       console.table(data);
       console.log("fld " + fld);
       if (fld === 0) {
+        console.log("here1");
         return "0";
       }
       if (fld === true) {
+        console.log("here2");
         return "True";
       } else if (fld === false) {
+        console.log("here3");
         return "False";
       }
       if (field === "eventDate") {
         const { eventDay, eventMonth } = this.props.data;
         return `${eventMonth} ${eventDay}`;
       }
+      console.log(fld);
       return fld;
     } catch (e) {
       console.log("CATCH " + e.message);
@@ -245,7 +253,7 @@ class Form extends Component {
                           marginTop: "10px"
                         }}
                       >
-                        {x.title}
+                        {x.required ? `${x.title} *` : x.title}
                       </div>
                       <FieldDropDown
                         options={x.options}
@@ -264,7 +272,7 @@ class Form extends Component {
                           marginTop: "10px"
                         }}
                       >
-                        {x.title}
+                        {x.required ? `${x.title} *` : x.title}
                       </div>
                       <AutoComplete
                         hintText="Select gift event type"

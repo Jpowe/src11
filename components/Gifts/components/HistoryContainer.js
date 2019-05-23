@@ -131,6 +131,7 @@ class HistoryContainer extends Component {
                 title="GIFTS"
                 data={this.parseGift(this.props.requestGifts)}
                 headers={this.getHeaderText(fieldsGift)}
+                colWidth={"20%"}
               />
             )}
             {this.parseOrder(this.props.requestGifts) && (
@@ -138,6 +139,7 @@ class HistoryContainer extends Component {
                 title="ORDERS"
                 data={this.parseOrder(this.props.requestGifts)}
                 headers={this.getHeaderText(fieldsGiftOrder)}
+                colWidth={"14%"}
               />
             )}
             {this.parseDelivery(this.props.requestGifts) && (
@@ -145,6 +147,7 @@ class HistoryContainer extends Component {
                 title="DELIVERIES"
                 data={this.parseDelivery(this.props.requestGifts)}
                 headers={this.getHeaderText(fieldsGiftDelivery)}
+                colWidth={"16%"}
               />
             )}
           </div>

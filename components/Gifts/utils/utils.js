@@ -6,7 +6,7 @@ export const isNumber = str => {
 };
 
 export const numberAddCommas = x => {
-  return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : null;
+  return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : x;
 };
 export const prependDollarSign = n => {
   return R.test(/^[$]/, n) ? n : `$${n}`;
@@ -113,6 +113,7 @@ export const formatCurrency = input => {
   } else {
     str = input.replace(/[^\d]/g, "");
   }
+  str = !str ? 0 : str;
 
   return prependDollarSign(numberAddCommas(str));
 };

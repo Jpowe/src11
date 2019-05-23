@@ -39,7 +39,7 @@ class Main extends Component {
         {
           id: 4,
           component: <GiftRequests title="Gift Requests screen" />,
-          message: "1. Add request. 2. Associate to party. 3. Assign to PA"
+          message: "1. Add request. 2. Associate request to party."
         },
         {
           id: 5,

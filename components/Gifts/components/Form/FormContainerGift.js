@@ -19,7 +19,12 @@ class FormContainerGift extends Component {
     this.props.loadConfigs();
   }
   componentDidMount() {
-    //  this.props.loadData();
+    console.log(this.props.gift);
+    /*  THIS WHERE CURRENT GIFT AUTOMATICALLY CREATED */
+    if (!R.prop("description", this.props.gift)) {
+      console.log("!props.gift");
+      this.props.saveForm({}, true);
+    }
   }
   /*
   addOptions(rows) {
@@ -123,7 +128,8 @@ class FormContainerGift extends Component {
     const fieldsGE = R.map(x => x.name, fieldsGift);
     console.log(JSON.stringify(fieldsGE));
     newObj = R.pick(fieldsGE, newObj);
-    if (newObj.value) {
+    console.log(newObj.value);
+    if (newObj.value && isNaN(newObj.value)) {
       newObj = {
         ...newObj,
         value: Number(R.tail(newObj.value.split("")).join(""))
@@ -131,7 +137,7 @@ class FormContainerGift extends Component {
     }
 
     console.table(newObj);
-    this.props.saveForm(newObj);
+    this.props.saveForm(newObj, false);
   };
 
   render() {
@@ -169,8 +175,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  saveForm: obj => {
-    dispatch(saveFormGift2(obj));
+  saveForm: (obj, create) => {
+    dispatch(saveFormGift2(obj, create));
   },
   loadConfigs: () => {
     dispatch(loadConfigs());

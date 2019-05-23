@@ -38,9 +38,9 @@ class HistorySection extends Component {
             height: "5px"
           }}
         />
-        <ColumnRow data={headers} />
+        <ColumnRow data={headers} colWidth={this.props.colWidth} />
         {data.map((x, i) => (
-          <ListRow data={x} rowNum={i} />
+          <ListRow data={x} rowNum={i} colWidth={this.props.colWidth} />
         ))}
       </div>
     );

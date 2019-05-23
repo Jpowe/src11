@@ -155,7 +155,6 @@ export default class Row extends React.Component {
 
   renderCells = objData => {
     const ks = R.keys(objData);
-    console.log("cellwidth " + this.props.cellWidth);
     //  console.log("keys:");
     //  console.table(ks);
     return R.map(
@@ -175,6 +174,13 @@ export default class Row extends React.Component {
       ks
     );
   };
+  changeParties = data => {
+    console.table(data);
+    const d = { ...data, party: R.prop("geParties", data) };
+    console.table(d);
+    return d;
+  };
+
   render() {
     const {
       selectColor,
@@ -234,7 +240,8 @@ export default class Row extends React.Component {
               this.state.assignedTo
             )}
           {collapseRow && <div style={{ minWidth: "218px" }} />}
-          {this.renderCells(data)}
+          {!collapseRow && this.renderCells(data)}
+          {collapseRow && this.renderCells(this.changeParties(data))}
         </div>
 
         <Divider />

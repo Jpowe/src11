@@ -4,6 +4,7 @@ import TableGiftEventsContainer from "./TableGiftEventsContainer";
 import MonthDropDown from "./MonthDropDown";
 import GiftEventTypeDropDown from "./GiftEventTypeDropDown";
 import CircleAdd from "material-ui/svg-icons/image/control-point";
+import FilterIcon from "material-ui/svg-icons/content/filter-list";
 
 class ListView extends Component {
   constructor(props) {
@@ -27,12 +28,15 @@ class ListView extends Component {
             display: "flex",
             height: "50px",
             padding: "4px",
-            justifyContent: "space-between",
+            //  justifyContent: "space-between",
             alignItems: "flex-end",
             border: "4px solid #6076A9",
             backgroundColor: "#f4dfb7"
           }}
         >
+          <div style={{ padding: "10px" }}>
+            <FilterIcon />
+          </div>
           <div>
             <MonthDropDown />
           </div>
@@ -46,7 +50,7 @@ class ListView extends Component {
               color: "white",
               borderRadius: "4px",
               padding: "4px",
-              margin: "4px",
+              margin: "14px",
               cursor: "pointer",
               width: "150px"
             }}

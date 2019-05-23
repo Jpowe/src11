@@ -9,7 +9,9 @@ import {
   GIFT_LOG_ADD_GIFT_EVENTS,
   GIFT_LOG_UPDATE_GIFT_EVENT,
   GIFT_LOG_MERGE_ROW,
-  GIFT_LOG_HIERARCHY
+  GIFT_LOG_HIERARCHY,
+  //  GIFT_LOG_UPDATE_STATE_GIFTS,
+  TEST
 } from "../actions";
 
 const mergeRows = (obj1, obj2) => {
@@ -163,8 +165,34 @@ export const giftLog = (state = [], action) => {
           ? addLevel(orderGroupHierarchy(state.groupHierarchy, action.payload))
           : addLevel([...action.payload])
       };
+    /*
+    case GIFT_LOG_UPDATE_STATE_GIFTS:
+      console.log("REDUCER GIFT_LOG_UPDATE_STATE_GIFTS");
+      console.log(action.id);
+      console.table(action.payload);
+      const temp = R.map(
+        x => (x.id === action.id ? { ...x, ...action.payload } : x),
+        state["gifts"]
+      );
+      console.table(temp);
+      return {
+        ...state,
+        test: "TESTING",
+        gifts2: [
+          R.map(
+            x => (x.id === action.id ? { ...x, ...action.payload } : x),
+            state["gifts"]
+          )
+        ]
+      };
+    case TEST:
+      console.log("REDUCER TEST");
+      return {
+        ...state,
+        test: "test test"
+      };*/
     default:
-      console.log("REDUCER CASE DEFAULT");
+      console.log("REDUCER CASE DEFAULT " + action.id);
       return {
         ...state,
         currentGiftEvent: state.currentGiftEvent ? state.currentGiftEvent : null
@@ -394,12 +422,17 @@ export const getCurrentRequestLocations = state => {
       const addy = R.path(
         ["gift", "delivery", "location", "formattedAddress"],
         reqGift
-      ).toString();
+      )
+        ? R.path(
+            ["gift", "delivery", "location", "formattedAddress"],
+            reqGift
+          ).toString()
+        : null;
       const uuid = R.path(["gift", "delivery", "location", "uuid"], reqGift);
       const newObj = { name: addy, title: addy, value: uuid };
       return newObj;
     };
-    const objLocs = R.map(convert, reqGifts);
+    const objLocs = R.filter(x => x.value, R.map(convert, reqGifts));
     console.table(objLocs);
     return objLocs;
   } catch (e) {

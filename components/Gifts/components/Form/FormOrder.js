@@ -261,7 +261,7 @@ class Form extends Component {
                           marginTop: "10px"
                         }}
                       >
-                        {x.title}
+                        {x.required ? `${x.title} *` : x.title}
                       </div>
                       <FieldDropDown
                         options={x.options}
@@ -280,7 +280,7 @@ class Form extends Component {
                           marginTop: "10px"
                         }}
                       >
-                        {x.title}
+                        {x.required ? `${x.title} *` : x.title}
                       </div>
                       <AutoComplete
                         hintText="Select vendor"
@@ -297,6 +297,7 @@ class Form extends Component {
                         openOnFocus={true}
                         name={x.name}
                         style={{ marginLeft: "4px" }}
+                        fullWidth={true}
                       />
                     </div>
                   ) : x.uiType === "textArea" ? (

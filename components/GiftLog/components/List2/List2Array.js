@@ -41,14 +41,32 @@ class List2 extends Component {
         <div
           style={{
             display: "flex",
-            justifyContent: "space-around",
+            //  justifyContent: "space-around",
             backgroundColor: "#66b266",
             color: "#fff",
             fontWeight: typography.fontWeightLight
           }}
         >
-          <div>Request</div>
-          <div>Party</div>
+          <div
+            style={{
+              width: "50%",
+              marginLeft: "20px",
+              padding: "0px 2px"
+              //border: "2px solid red"
+            }}
+          >
+            Request
+          </div>
+          <div
+            style={{
+              width: "50%",
+              marginLeft: "20px",
+              padding: "0px 2px"
+              //border: "2px solid red"
+            }}
+          >
+            Party
+          </div>
         </div>
         <div
           style={{
@@ -61,15 +79,33 @@ class List2 extends Component {
               style={{
                 backgroundColor: getColor(i),
                 display: "flex",
-                justifyContent: "space-around",
+                //  justifyContent: "space-around",
                 fontVariant: "small-caps",
                 fontSize: 20,
                 height: "40px",
                 fontWeight: typography.fontWeightLight
               }}
             >
-              <div>{x.requestNotes}</div>
-              <div>{this.getNames(x)} </div>
+              <div
+                style={{
+                  width: "50%",
+                  marginLeft: "20px",
+                  padding: "0px 2px"
+                  //border: "2px solid red"
+                }}
+              >
+                {x.requestNotes}
+              </div>
+              <div
+                style={{
+                  width: "50%",
+                  marginLeft: "20px",
+                  padding: "0px 2px"
+                  //border: "2px solid red"
+                }}
+              >
+                {this.getNames(x)}{" "}
+              </div>
             </div>
           ))}
         </div>

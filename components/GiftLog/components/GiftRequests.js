@@ -17,10 +17,10 @@ class GiftRequests extends Component {
       <div>
         <div style={{ display: "flex" }}>
           <FormContainerRequest />
-          <div style={{ padding: "10px" }}>
+          <div style={{ marginLeft: "50px" }}>
             <RequestsList />
           </div>{" "}
-          <div style={{ padding: "10px" }}>
+          <div style={{ marginLeft: "50px" }}>
             <GeneologyPeopleList />
           </div>
         </div>

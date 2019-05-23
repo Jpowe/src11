@@ -10,6 +10,8 @@ import FormContainerOrder from "./Form/FormContainerOrder";
 import FormContainerDelivery from "./Form/FormContainerDelivery";
 import HistoryContainer from "./HistoryContainer";
 import Paper from "material-ui/Paper";
+import GiftPopupContainer from "./GiftPopupContainer";
+import FilterIcon from "material-ui/svg-icons/content/filter-list";
 
 class ListView extends Component {
   constructor(props) {
@@ -31,19 +33,22 @@ class ListView extends Component {
   render() {
     const { title } = this.props;
     return (
-      <div>
+      <div style={{ marginLeft: "620px" }}>
         <Paper zDepth={2}>
           <div
             style={{
               display: "flex",
               height: "50px",
               padding: "4px",
-              justifyContent: "space-between",
+              //justifyContent: "space-between",
               alignItems: "flex-end",
               border: "4px solid #6076A9",
               backgroundColor: "#f4dfb7"
             }}
           >
+            <div style={{ padding: "10px" }}>
+              <FilterIcon />
+            </div>
             <div>
               <MonthDropDown />
             </div>
@@ -74,7 +79,7 @@ class ListView extends Component {
           }}
         >
           <h3 style={{ padding: "12px" }}>
-            Current year (2019): Gift form, Order form, Delivery form.
+            <GiftPopupContainer />
           </h3>
           <div
             style={{

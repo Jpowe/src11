@@ -103,7 +103,8 @@ export default class ListRow extends React.Component {
               ? "#f58c32"
               : this.state.color,
             fontSize: "18px",
-            padding: "8px"
+            paddingLeft: "8px",
+            paddingRight: "8px"
           }}
           onMouseOver={rollOver}
           onMouseOut={rollOut}
@@ -148,15 +149,25 @@ export default class ListRow extends React.Component {
             )}
             <div
               style={{
-                padding: "20px",
-                cursor: "pointer",
+                padding: "8px",
                 display: "flex",
                 alignItems: "center"
               }}
             >
-              <div onClick={() => this.toggle()}>{label}</div>
+              <div
+                onClick={() => this.toggle()}
+                style={{ padding: "30px", cursor: "pointer" }}
+              >
+                {label}
+              </div>
               {this.props.deleteable && (
-                <div style={{ marginLeft: "40px" }}>
+                <div
+                  style={{
+                    marginLeft: "20px",
+                    padding: "15px",
+                    cursor: "pointer"
+                  }}
+                >
                   <HighLightOff onClick={() => this.delete(this.props.data)} />
                 </div>
               )}

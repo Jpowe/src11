@@ -6,7 +6,8 @@ import {
   setVar,
   loadConfigs,
   updateRow,
-  updateRowAssign
+  updateRowAssign,
+  saveFormGift2
 } from "../actions";
 
 import Table from "./Table/Table";
@@ -435,6 +436,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     console.table(obj);
     console.log("giftUUID " + giftID);
     console.table(getCurrentGift());
+    if (!giftID) {
+      dispatch(saveFormGift2({}.true));
+    }
     if (col === "status") {
       dispatch(
         updateRow(reqID, giftID, {

@@ -32,7 +32,7 @@ class Cell extends Component {
         );
       });
     } catch (e) {
-      console.log("CATCH " + e.message);
+      //console.log("CATCH " + e.message);
     }
   };
   getWidth = w => {

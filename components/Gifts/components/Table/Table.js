@@ -177,6 +177,7 @@ export default class Table extends React.Component {
         eventDate: row.eventDate,
         geUUID: row.geUUID,
         party: row.party,
+        geParties: row.geParties,
         ...a,
         collapseRow: true,
         request: ""

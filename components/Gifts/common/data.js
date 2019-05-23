@@ -43,16 +43,8 @@ export const fieldsGift = [
     title: "Description",
     type: "string",
     order: 2,
-    uiType: "textArea"
-  },
-  {
-    name: "assignedTo",
-    title: "Assigned to",
-    type: "string",
-    order: 3,
-    uiType: "dropDown",
-    loadConfig: true,
-    configName: "configPersonalAssts"
+    uiType: "textArea",
+    required: true
   },
   {
     name: "sentiment",
@@ -89,7 +81,7 @@ export const fieldsGiftOrder = [
 ];
 
 export const fieldsGiftDelivery = [
-  { name: "location", title: "Location", uiType: "location" },
+  { name: "location", title: "Location", uiType: "location", required: true },
   { name: "attentionTo", title: "Attention to" },
   { name: "deliveryContactNumber", title: "Delivery phone #", type: "phone" },
   { name: "deliveryTrackingNumber", title: "Delivery tracking #" },
