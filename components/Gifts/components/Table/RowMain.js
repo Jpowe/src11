@@ -9,6 +9,8 @@ import DropDownMenu from "material-ui/DropDownMenu";
 import MenuItem from "material-ui/MenuItem";
 
 import Edit from "material-ui/svg-icons/image/edit";
+import ExpandMore from "material-ui/svg-icons/navigation/expand-more";
+import ExpandLess from "material-ui/svg-icons/navigation/expand-less";
 
 //import AutoComplete from "material-ui/AutoComplete";
 //import Form from "../Form";
@@ -26,6 +28,13 @@ const statuses = [
   { name: "Ready to ship", color: "#EF9A9A", value: 7 }
 ];
 
+const styles = {
+  expand: {
+    cursor: "pointer",
+    //padding: "8px",
+    zoom: "150%"
+  }
+};
 export default class Row extends React.Component {
   constructor(props) {
     super(props);
@@ -189,7 +198,8 @@ export default class Row extends React.Component {
       data,
       rollOverColor,
       collapseRow,
-      onCollapse
+      onCollapse,
+      expandedRows
     } = this.props;
     const setColor = id => {
       console.log("ROW setColor " + data.id);
@@ -210,6 +220,19 @@ export default class Row extends React.Component {
       });
     };
 
+    const isInExpandedRows = () => {
+      console.log("isInExpandedRows");
+      console.log(JSON.stringify(expandedRows));
+      console.table(data);
+      console.log(R.prop("geUUID", data));
+      if (R.prop("geUUID", data)) {
+        console.log(R.contains(R.prop("geUUID", data), expandedRows));
+        return R.contains(R.prop("geUUID", data), expandedRows);
+      } else {
+        return false;
+      }
+    };
+
     return (
       <div>
         <div
@@ -217,7 +240,8 @@ export default class Row extends React.Component {
             display: "flex",
             alignItems: "flex-start",
             backgroundColor: this.state.color,
-            fontSize: "14px"
+            fontSize: "14px",
+            borderBottom: "1px solid #9ccc65"
           }}
           onMouseOver={rollOver}
           onMouseOut={rollOut}
@@ -232,14 +256,19 @@ export default class Row extends React.Component {
               }}
             />
           )}
+          {collapseRow &&
+            isInExpandedRows() && <ExpandLess style={styles.expand} />}
+          {collapseRow &&
+            !isInExpandedRows() && <ExpandMore style={styles.expand} />}
           {!collapseRow && this.showDropDown(data.status)}
-          {collapseRow && <div style={{ minWidth: "220px" }} />}
+          {collapseRow && <div style={{ minWidth: "200px" }} />}
+
           {!collapseRow &&
             this.showDropDownAssignedTo(
               this.props.personalAssts,
               this.state.assignedTo
             )}
-          {collapseRow && <div style={{ minWidth: "218px" }} />}
+          {collapseRow && <div style={{ minWidth: "203px" }} />}
           {!collapseRow && this.renderCells(data)}
           {collapseRow && this.renderCells(this.changeParties(data))}
         </div>

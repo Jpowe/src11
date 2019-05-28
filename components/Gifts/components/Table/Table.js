@@ -127,6 +127,11 @@ export default class Table extends React.Component {
       console.log("expand " + JSON.stringify(expand));
       this.setState({ expand: expand });
     };
+    const isExpanded = id => {
+      console.log("isExpanded id: " + id);
+      console.log("isExpanded " + R.contains(id, this.state.expand));
+      return R.contains(id, this.state.expand);
+    };
 
     return data.map(
       (row, index) =>
@@ -154,6 +159,7 @@ export default class Table extends React.Component {
             personalAssts={this.props.personalAssts}
             collapseRow={!!row.collapseRow}
             onCollapse={() => setExpand(row.geUUID)}
+            expandedRows={this.state.expand}
           />
         )
     );
@@ -176,6 +182,7 @@ export default class Table extends React.Component {
         eventType: row.eventType,
         eventDate: row.eventDate,
         geUUID: row.geUUID,
+        id: row.id,
         party: row.party,
         geParties: row.geParties,
         ...a,
