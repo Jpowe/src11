@@ -23,6 +23,7 @@ import IrisCalendar from "./IrisCalendar/DatePickerContainer.js";
 import Add2Intact from "./Add2Intact/A2I";
 import GiftLog from "./GiftLog/components/Main";
 import ListView from "./Gifts/components/ListView";
+import People from "./People/components/SearchContainer";
 
 class MainPage extends Component {
   constructor(props) {
@@ -79,6 +80,7 @@ class MainPage extends Component {
           />
           <Route path="/giftLog" component={GiftLog} />
           <Route path="/gift" component={ListView} />
+          <Route path="/people" component={People} />
         </Switch>
       </div>
     );

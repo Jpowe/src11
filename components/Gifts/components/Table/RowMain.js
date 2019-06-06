@@ -208,8 +208,8 @@ export default class Row extends React.Component {
     };
     const rollOver = () => {
       this.setState({
-        onmouseover: true,
-        color: rollOverColor
+        onmouseover: true
+        //color: rollOverColor
       });
     };
     const rollOut = () => {
@@ -240,6 +240,7 @@ export default class Row extends React.Component {
             display: "flex",
             alignItems: "flex-start",
             backgroundColor: this.state.color,
+            //  border: `2px solid ${this.state.color}`,
             fontSize: "14px",
             borderBottom: "1px solid #9ccc65"
           }}

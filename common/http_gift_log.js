@@ -250,10 +250,201 @@ export const getPerson = (jwt, personUUID) => {
             notes,
             deathDate
          }
+
+
+
         }
       }
     }
+  `;
+  const variables = {
+    personUUID: personUUID
+  };
+  const apolloFetch = createApolloFetch({ uri });
+  apolloFetch.use(({ request, options }, next) => {
+    if (!options.headers) {
+      options.headers = {}; // Create the headers object if needed.
+    }
+    options.headers["x-auth-jwt"] = jwt;
+    options.credentials = "include";
+    next();
+  });
+  return apolloFetch({ query, variables }).then(res => res.data);
+};
 
+export const getPersonGifts = (jwt, personUUID) => {
+  const query = `
+    query Person($personUUID:String){
+      Person(personUUID:$personUUID){
+        uuid
+        giftEvents{
+        active
+        recurring
+        addedDate
+        eventDay
+        eventMonth
+        eventYear
+        eventType
+        notes
+        registryStatus
+        createdTimestamp
+       eventPersons{
+         uuid,
+         firstName,
+         lastName,
+         middleName,
+         legalFirstName,
+         legalLastName,
+         personalMobile,
+         personalEmail,
+         alternateEmail,
+         gender,
+         birthDate,
+         birthSurname,
+         prefix,
+         suffix,
+         notes,
+         deathDate
+       }
+       eventGroups{
+         uuid,
+         name,
+         memberPersons{
+           person {
+             uuid
+             firstName,
+             lastName
+           }
+         }
+       }
+       eventOrganizations{
+         uuid,
+         name,
+         employees{
+           title,
+           person{
+             uuid,
+             firstName,
+             lastName
+           }
+         },
+         memberGroups{
+           group{
+             uuid,
+             name,
+             category,
+             memberGroups{
+                 group{
+                   uuid,
+                   name,
+                   category
+                 }
+             },
+             memberPersons{
+               notes,
+               person{
+                 uuid,
+                 firstName,
+                 lastName
+               }
+             },
+           }
+         }
+       }
+       eventAnimals{
+         uuid,
+         name,
+         type,
+         notes
+       }
+       eventGiftRequests{
+         uuid
+         registryStatus
+         requestNotes
+         active
+         requestGifts{
+           giftYear,
+           status,
+           gift{
+             uuid,
+             value,
+             description,
+             giftNotes,
+             sentiment,
+             assignedTo,
+             recipientPersons{
+               uuid,
+               firstName,
+               lastName
+             },
+             recipientGroups{
+               uuid,
+               name
+             },
+             recipientOrganizations{
+               uuid,
+               name
+             },
+             recipientAnimals{
+               uuid,
+               name
+             },
+             delivery{
+               uuid
+               attentionTo
+               deliveryContactNumber
+               deliveryTrackingNumber
+               confirmedDeliveryDate
+               location{
+                 uuid
+                 name
+                 formattedAddress
+               }
+             }
+             giftVendor{
+               uuid
+               orderStatus
+               orderNumber
+               orderDate
+               vendorRepresentativeName
+               vendorRepresentativePhone
+               vendorRepresentativeEmail
+               organization{
+                 uuid
+                 name
+                 contactNumber
+               }
+             }
+           }
+         }
+         requestPersons{
+           uuid,
+           firstName,
+           lastName
+         }
+         requestAnimals{
+           uuid,
+           name
+         }
+         requestOrganizations{
+           uuid,
+           category,
+           name
+         }
+         requestGroups{
+           uuid,
+           name
+         }
+       }
+
+
+
+
+
+
+         }
+      }
+    }
   `;
   const variables = {
     personUUID: personUUID
@@ -651,6 +842,10 @@ export const getGiftEvent = (jwt, id) => {
           uuid,
           name
         }
+
+
+
+
       }
     }
   }

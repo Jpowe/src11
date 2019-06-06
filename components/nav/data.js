@@ -259,6 +259,18 @@ export const data2 = [
     endpoint: "/gift",
     parentName: "Gift mgmt",
     allow: "Gift Log Admin"
+  },
+  {
+    id: 219,
+    name: "People",
+    parentId: 17,
+    level: 2,
+    show: false,
+    leaf: true,
+    favorite: false,
+    endpoint: "/people",
+    parentName: "Gift mgmt",
+    allow: "Gift Log Admin"
   }
 ];
 

@@ -284,7 +284,7 @@ class Form extends Component {
                         onNewRequest={str => this.handleNewRequest(x.name, str)}
                         dataSource={x.options}
                         //filter={(searchText, key) => key.indexOf(searchText) !== -1}
-                        //  filter={AutoComplete.fuzzyFilter}
+                        filter={AutoComplete.fuzzyFilter}
                         openOnFocus={true}
                         name={x.name}
                         style={{ marginLeft: "4px" }}

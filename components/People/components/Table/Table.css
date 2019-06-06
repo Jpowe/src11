@@ -1,0 +1,56 @@
+.paginated {
+  margin-right: 16px;
+  font-size: large;
+}
+.paginated-group {
+  margin-right: 50px;
+  display: flex;
+}
+.pointer {
+  cursor: pointer;
+}
+.arrows {
+  font-size: 30px;
+}
+
+/*  TRANSITIONS */
+.example-enter {
+  opacity: 0.01;
+  width: 0px;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  height: 100px;
+  transition: 700ms;
+}
+
+.example-leave {
+  opacity: 1;
+  height: 80px;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  height: 0px;
+  transition: 200ms;
+}
+/*
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 1500ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+*/
