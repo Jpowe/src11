@@ -151,7 +151,7 @@ class TableContainer extends Component {
             onselect={this.onRowSelected}
           />
         ) : (
-          <div style={{ marginLeft: "200px" }}>No results.</div>
+          <div style={{ marginLeft: "200px" }} />
         )}
       </div>
     );

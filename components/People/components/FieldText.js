@@ -27,7 +27,9 @@ class FieldText extends Component {
         <TextField
           value={this.state.value}
           hintText={
-            this.props.hintText ? this.props.hintText : "Search and add."
+            this.props.hintText
+              ? this.props.hintText
+              : "Search for person, then select from below."
           }
           floatingLabelText={obj ? obj.title : null}
           fullWidth={false}

@@ -30,7 +30,7 @@ class GiftRequestView extends Component {
               //fontVariant: "small-caps",
               margin: "20px",
               padding: "8px",
-              color: "#acca53"
+              color: "#8fad35"
             }}
           >
             {R.prop("requestNotes", data)}
