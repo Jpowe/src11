@@ -106,6 +106,7 @@ class TableContainer extends Component {
     console.log("onRowSelected " + rowUUID);
     //this.setState({ rowSelected: rowUUID });
     this.props.getPersonGifts(rowUUID);
+    this.props.onView("year");
   };
   rowsFiltered = rows => {
     console.table(rows);
@@ -149,6 +150,7 @@ class TableContainer extends Component {
             onUpdate={this.props.onUpdate}
             rowType="Row"
             onselect={this.onRowSelected}
+            onEdit={() => this.props.onView("formPerson")}
           />
         ) : (
           <div style={{ marginLeft: "200px" }} />

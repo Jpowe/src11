@@ -12,9 +12,23 @@ class GiftRequestView extends Component {
     console.log("renderItems");
     return;
   }
+  giftYrInGift = (yr, reqGift) => {
+    return R.prop("giftYear", reqGift) == yr ? true : false;
+  };
+  sortGifts = reqGifts => {
+    console.table(reqGifts);
+    const sortGifts = R.sortWith([R.descend(R.prop("giftYear"))])(reqGifts);
+    return sortGifts.map(
+      x =>
+        (this.giftYrInGift(this.props.yr, x) || !this.props.yr) && (
+          <GiftView gift={x.gift} giftYear={x.giftYear} />
+        )
+    );
+    //  return reqGifts;
+  };
 
   render() {
-    const { data } = this.props;
+    const { data, yr } = this.props;
     return (
       <div>
         <div
@@ -25,19 +39,29 @@ class GiftRequestView extends Component {
             margin: "4px"
           }}
         >
-          <div
-            style={{
-              //fontVariant: "small-caps",
-              margin: "20px",
-              padding: "8px",
-              color: "#8fad35"
-            }}
-          >
-            {R.prop("requestNotes", data)}
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <div
+              style={{
+                textDecoration: "underline",
+                fontVariant: "small-caps",
+                marginRight: "20px"
+              }}
+            >
+              Gift Request:
+            </div>
+            <div
+              style={{
+                //fontVariant: "small-caps",
+                margin: "20px",
+                padding: "8px",
+                color: "#8fad35"
+              }}
+            >
+              {R.prop("requestNotes", data)}
+            </div>
           </div>
-          {data.requestGifts.map(x => (
-            <GiftView gift={x.gift} giftYear={x.giftYear} />
-          ))}
+
+          {this.sortGifts(data.requestGifts)}
         </div>
       </div>
     );

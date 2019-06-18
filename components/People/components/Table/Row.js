@@ -98,7 +98,15 @@ export default class Row extends React.Component {
               "birthSurname",
               "legalLastName",
               "suffix"
-            ]) && <Cell data={[objData[x]]} width={this.props.cellWidth} />,
+            ]) && (
+              <Cell
+                data={[objData[x]]}
+                width={this.props.cellWidth}
+                onclick={() =>
+                  this.props.onselect(objData.uuid, "main", objData.partyType)
+                }
+              />
+            ),
       ks
     );
   };
@@ -164,10 +172,7 @@ export default class Row extends React.Component {
       </div>
     );
   };
-  showIcon = obj => {
-    const b = R.contains("firstName", R.keys(obj));
-    return b;
-  };
+
   render() {
     const { selectColor, color, selectable, data, rollOverColor } = this.props;
     const setColor = id => {
@@ -201,10 +206,14 @@ export default class Row extends React.Component {
           }}
           onMouseOver={rollOver}
           onMouseOut={rollOut}
-          onClick={() => this.props.onselect(data.uuid, "main", data.partyType)}
         >
+          <Edit
+            style={{
+              cursor: "pointer"
+            }}
+            onClick={this.props.onEdit}
+          />
           {this.renderCells(data)}
-          {!this.showIcon(data) && this.renderIconButtons("content")}
         </div>
 
         <Divider />

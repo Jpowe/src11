@@ -42,6 +42,7 @@ class Cell extends Component {
     const { type, data } = this.props;
     return (
       <div
+        onClick={this.props.onclick}
         style={{
           width: this.getWidth(this.props.width),
           marginLeft: "0px",

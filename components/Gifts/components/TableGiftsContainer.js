@@ -39,6 +39,10 @@ class TableContainer extends Component {
     console.log("TableContainerMain CDM");
     //  this.props.getDataForComp();
   }
+  componentWillUnmount() {
+    console.log("TGC componentWillUnmount f");
+    this.props.setVar("gifts", null);
+  }
   componentWillRecieveProps(nextProps) {
     console.log("TC CWRP nextProps.rows " + nextProps.rows);
   }

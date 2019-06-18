@@ -885,7 +885,7 @@ export const saveFormGift2 = (payload, create) => async (
   dispatch,
   getState
 ) => {
-  console.log("ACTION saveFormGift2 f");
+  console.log("ACTION saveFormGift2 f create: " + create);
   let newItem, id;
   const token = getState().notifications.token;
   const {

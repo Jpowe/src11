@@ -278,93 +278,15 @@ export const getPersonGifts = (jwt, personUUID) => {
       Person(personUUID:$personUUID){
         uuid
         giftEvents{
-        active
-        recurring
-        addedDate
+        uuid
         eventDay
         eventMonth
-        eventYear
         eventType
-        notes
-        registryStatus
-        createdTimestamp
-       eventPersons{
-         uuid,
-         firstName,
-         lastName,
-         middleName,
-         legalFirstName,
-         legalLastName,
-         personalMobile,
-         personalEmail,
-         alternateEmail,
-         gender,
-         birthDate,
-         birthSurname,
-         prefix,
-         suffix,
-         notes,
-         deathDate
-       }
-       eventGroups{
-         uuid,
-         name,
-         memberPersons{
-           person {
-             uuid
-             firstName,
-             lastName
-           }
-         }
-       }
-       eventOrganizations{
-         uuid,
-         name,
-         employees{
-           title,
-           person{
-             uuid,
-             firstName,
-             lastName
-           }
-         },
-         memberGroups{
-           group{
-             uuid,
-             name,
-             category,
-             memberGroups{
-                 group{
-                   uuid,
-                   name,
-                   category
-                 }
-             },
-             memberPersons{
-               notes,
-               person{
-                 uuid,
-                 firstName,
-                 lastName
-               }
-             },
-           }
-         }
-       }
-       eventAnimals{
-         uuid,
-         name,
-         type,
-         notes
-       }
        eventGiftRequests{
          uuid
-         registryStatus
          requestNotes
-         active
          requestGifts{
            giftYear,
-           status,
            gift{
              uuid,
              value,
@@ -372,23 +294,6 @@ export const getPersonGifts = (jwt, personUUID) => {
              giftNotes,
              sentiment,
              assignedTo,
-             recipientPersons{
-               uuid,
-               firstName,
-               lastName
-             },
-             recipientGroups{
-               uuid,
-               name
-             },
-             recipientOrganizations{
-               uuid,
-               name
-             },
-             recipientAnimals{
-               uuid,
-               name
-             },
              delivery{
                uuid
                attentionTo
@@ -417,33 +322,10 @@ export const getPersonGifts = (jwt, personUUID) => {
              }
            }
          }
-         requestPersons{
-           uuid,
-           firstName,
-           lastName
-         }
-         requestAnimals{
-           uuid,
-           name
-         }
-         requestOrganizations{
-           uuid,
-           category,
-           name
-         }
-         requestGroups{
-           uuid,
-           name
-         }
        }
 
-
-
-
-
-
-         }
-      }
+    }
+    }
     }
   `;
   const variables = {

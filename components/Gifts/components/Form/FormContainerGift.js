@@ -21,7 +21,7 @@ class FormContainerGift extends Component {
   componentDidMount() {
     console.log(this.props.gift);
     /*  THIS WHERE CURRENT GIFT AUTOMATICALLY CREATED */
-    if (!R.prop("description", this.props.gift)) {
+    if (!R.prop("uuid", this.props.gift)) {
       console.log("!props.gift");
       this.props.saveForm({}, true);
     }

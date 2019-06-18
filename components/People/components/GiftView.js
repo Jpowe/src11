@@ -39,8 +39,17 @@ class GiftView extends Component {
             width: "50%"
           }}
         >
-          <div style={{ margin: "5px" }}> {giftYear}</div>
+          <div
+            style={{
+              textDecoration: "underline",
+              fontVariant: "small-caps",
+              marginRight: "20px"
+            }}
+          >
+            Gift :
+          </div>
           <div style={{ margin: "5px" }}>{this.get(gift, "description")}</div>
+          <div style={{ margin: "5px" }}> {giftYear}</div>
           <div style={{ margin: "5px" }}>
             {this.showValue(this.get(gift, "value"))}
           </div>

@@ -131,6 +131,7 @@ export default class Table extends React.Component {
           this.props.onselect(uuid, typ, partyType)
         }
         cellWidth={this.colWidth()}
+        onEdit={this.props.onEdit}
       />
     ));
   };

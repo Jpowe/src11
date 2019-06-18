@@ -9,6 +9,15 @@ class GiftEventView extends Component {
     super(props);
   }
   componentDidMount() {}
+  giftYrInGR = (yr, gr) => {
+    if (!!R.find(x => x.giftYear == yr, R.prop("requestGifts", gr))) {
+      console.log("true " + gr.uuid);
+      //arrSHOW_GRS.push({ year: yr, gr: gr.uuid });
+    }
+    return R.find(x => x.giftYear == yr, R.prop("requestGifts", gr))
+      ? true
+      : false;
+  };
 
   renderItems(rows) {
     console.log("renderItems");
@@ -23,14 +32,36 @@ class GiftEventView extends Component {
             }}
             onClick={() => console.log(row.uuid)}
           >
-            <div style={{ marginLeft: "100px", color: "#ca53ac" }}>
-              <h3>{R.prop("eventType", row)}</h3>
+            <div
+              style={{
+                marginLeft: "100px",
+                color: "#ca53ac",
+                display: "flex",
+                alignItems: "center"
+              }}
+            >
+              <div
+                style={{
+                  textDecoration: "underline",
+                  fontVariant: "small-caps",
+                  marginRight: "20px"
+                }}
+              >
+                Gift Event:
+              </div>
+              <h3>{`${R.prop("eventType", row)}  (${R.prop(
+                "eventMonth",
+                row
+              )}/${R.prop("eventDay", row)})`}</h3>
             </div>
             <div>
               {R.prop("eventGiftRequests", row)
-                ? R.prop("eventGiftRequests", row).map(r => (
-                    <GiftRequestView data={r} />
-                  ))
+                ? R.prop("eventGiftRequests", row).map(
+                    r =>
+                      (this.giftYrInGR(this.props.yr, r) || !this.props.yr) && (
+                        <GiftRequestView data={r} yr={this.props.yr} />
+                      )
+                  )
                 : null}
             </div>
           </div>
@@ -39,7 +70,7 @@ class GiftEventView extends Component {
   }
 
   render() {
-    const { rows } = this.props;
+    const { rows, yr } = this.props;
     return (
       <div
         style={{
