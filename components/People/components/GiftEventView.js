@@ -42,7 +42,6 @@ class GiftEventView extends Component {
             >
               <div
                 style={{
-                  textDecoration: "underline",
                   fontVariant: "small-caps",
                   marginRight: "20px"
                 }}

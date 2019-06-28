@@ -81,7 +81,12 @@ export const fieldsGiftOrder = [
 ];
 
 export const fieldsGiftDelivery = [
-  { name: "location", title: "Location", uiType: "location", required: true },
+  {
+    name: "location",
+    title: "Delivery Locations",
+    uiType: "location",
+    required: true
+  },
   { name: "attentionTo", title: "Attention to" },
   { name: "deliveryContactNumber", title: "Delivery phone #", type: "phone" },
   { name: "deliveryTrackingNumber", title: "Delivery tracking #" },

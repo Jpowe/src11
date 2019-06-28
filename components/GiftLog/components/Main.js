@@ -34,7 +34,7 @@ class Main extends Component {
         {
           id: 3,
           component: <GeneologyContainer title="Geneology screen" />,
-          message: "Add parties to gift event (and add geneology if known)"
+          message: "Add parties to gift event"
         },
         {
           id: 4,

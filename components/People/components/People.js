@@ -10,7 +10,7 @@ import GiftSortYearView from "./GiftSortYearView";
 import GiftEventView from "./GiftEventView";
 import DropDownMenu from "material-ui/DropDownMenu";
 import MenuItem from "material-ui/MenuItem";
-
+import PersonForm from "./FormContainerPerson";
 const data = [
   { uuid: 1, urgent: true, name: "a" },
   { uuid: 2, urgent: true, name: "b" },
@@ -25,14 +25,14 @@ const data = [
 class People extends Component {
   constructor(props) {
     super(props);
-    this.state = { data: data, view: "year", value: 1 };
+    this.state = { data: data, view: "formPerson", value: 1 };
   }
   componentDidMount() {}
 
   filterStr = v => {
     console.log("filterStr str= " + v);
     console.log("filterLength " + v.length);
-    this.setState({ filterStr: v });
+    this.setState({ filterStr: v, view: "formPerson" });
     this.props.onSearchText(v);
   };
   getYears = rows => {
@@ -55,16 +55,16 @@ class People extends Component {
   /*
   removeGRs = (data,yrs) => {
     console.log("removeGRs");
-   
+
     //arrSHOW_GRS:[{year:2019,gr:abc2},{year:2018:gr:3dc4}]
-    
+
     const f = (yr,ges)=>{
       R.map(x=>R.contains?(x.eventGiftRequests) ,ges)
     }
     yrs.map((yr,index)=>{
       f(yr,data[index])
     })
-    
+
 
     return data;
   };
@@ -120,9 +120,12 @@ class People extends Component {
       value: this.state.view === "year" ? 2 : 1
     });
   };
-
+  onView = view => {
+    console.log("onView " + view);
+    this.setState({ view: view });
+  };
   render() {
-    const { rows } = this.props;
+    const { rows, loading } = this.props;
     const styles = {
       content: {
         padding: 4
@@ -151,7 +154,7 @@ class People extends Component {
               width: "1000px"
             }}
           >
-            <h2>Gifts for Person</h2>
+            <h2>Gift History for Person</h2>
           </div>
           <hr />
           <div
@@ -176,12 +179,28 @@ class People extends Component {
           </div>
           <TableContainer
             searchType={"person"}
-            onView={x => this.setState({ view: x })}
+            onView={view => this.onView(view)}
           />
           <div>
             <hr />
             <hr />
-            {rows.length > 1 &&
+            {!loading &&
+              rows &&
+              !rows.length &&
+              (this.state.view === "year" ||
+                this.state.view === "giftevents") && (
+                <h3
+                  style={{
+                    fontStyle: "italic",
+                    color: "#DF5C33",
+                    padding: "8px"
+                  }}
+                >
+                  No gift history.
+                </h3>
+              )}
+
+            {rows.length > 0 &&
               this.state.view !== "formPerson" && (
                 <DropDownMenu
                   value={this.state.value}
@@ -204,7 +223,7 @@ class People extends Component {
                 <GiftEventView rows={rows} yrs={null} />
               </div>
             )}
-            {this.state.view === "formPerson" && <div>FORM PERSON HERE</div>}
+            {this.state.view === "formPerson" && <PersonForm />}
           </div>
         </Paper>
       </div>

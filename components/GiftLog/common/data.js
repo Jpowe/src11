@@ -42,8 +42,8 @@ export const genderStatuses = [
   { name: "Unknown", title: "Unknown", value: 3 }
 ];
 export const fieldsPerson = [
-  { name: "firstName", title: "First name" },
-  { name: "lastName", title: "Last name" },
+  { name: "firstName", title: "First name", required: true },
+  { name: "lastName", title: "Last name", required: true },
   { name: "middleName", title: "Middle name" },
   {
     name: "gender",

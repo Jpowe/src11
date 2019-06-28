@@ -33,6 +33,7 @@ class Form extends Component {
   componentWillReceiveProps(nextProps) {
     console.log(" FORM CWRP " + JSON.stringify(nextProps));
     console.log("FORM CWRP nextprops.data " + nextProps.data);
+    this.setState({ data: nextProps.data });
   }
   handleChange = event => {
     this.setState({ saveEnabled: true });
@@ -43,6 +44,7 @@ class Form extends Component {
   handleSave = () => {
     console.log("Form handleSave  ");
     this.setState({ saveEnabled: false });
+    console.table(this.state.data);
     this.props.onSave(this.state.data);
   };
   onSave = () => {
@@ -52,7 +54,7 @@ class Form extends Component {
     try {
       let field = R.prop("name", z);
       console.log("field " + field);
-      let fld = R.prop(field, this.props.data);
+      let fld = R.prop(field, this.state.data);
       console.table(data);
       console.log("fld " + fld);
       if (fld === 0) {
@@ -64,7 +66,7 @@ class Form extends Component {
         return "False";
       }
       if (field === "eventDate") {
-        const { eventDay, eventMonth } = this.props.data;
+        const { eventDay, eventMonth } = this.state.data;
         return `${eventMonth} ${eventDay}`;
       }
       return fld !== undefined ? fld : "";
@@ -169,7 +171,7 @@ class Form extends Component {
             "!R.prop(R.prop(name, reqObj), obj) " +
               R.prop(R.prop("name", reqObj), obj)
           );
-          if (R.prop(R.prop("name", reqObj), obj) === undefined) {
+          if (R.prop(R.prop("name", reqObj), obj) == (undefined || " ")) {
             console.log(R.prop(R.prop("name", reqObj), obj));
             isValid = false;
           }
@@ -239,7 +241,7 @@ class Form extends Component {
         >
           <div>
             {fields &&
-              this.props.data &&
+              this.state.data &&
               fields.map(
                 (x, i) =>
                   x.uiType === "dropDown" ? (
@@ -256,7 +258,7 @@ class Form extends Component {
                       </div>
                       <FieldDropDown
                         options={x.options}
-                        status={this.getValueDD(x, this.props.data)}
+                        status={this.getValueDD(x, this.state.data)}
                         //data={ }
                         onselect={value =>
                           this.saveEnabledTrue(this.childChange(value, x.name))

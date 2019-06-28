@@ -30,7 +30,8 @@ export default class Row extends React.Component {
       selected: this.props.selected,
       color: this.props.selected ? this.props.selectColor : this.props.color,
       status: this.props.data.value,
-      iconClick: false
+      iconClick: false,
+      showGeneologyFunctionality: false
     };
   }
   componentDidMount() {
@@ -205,9 +206,15 @@ export default class Row extends React.Component {
           {this.renderCells(data)}
           {!this.showIcon(data) && this.renderIconButtons("content")}
           {this.showIcon(data) && this.renderIconButtons("main")}
-          {this.showIcon(data) && this.renderIconButtons("parent")}
-          {this.showIcon(data) && this.renderIconButtons("partner")}
-          {this.showIcon(data) && this.renderIconButtons("child")}
+          {this.state.showGeneologyFunctionality &&
+            this.showIcon(data) &&
+            this.renderIconButtons("parent")}
+          {this.state.showGeneologyFunctionality &&
+            this.showIcon(data) &&
+            this.renderIconButtons("partner")}
+          {this.state.showGeneologyFunctionality &&
+            this.showIcon(data) &&
+            this.renderIconButtons("child")}
         </div>
 
         <Divider />

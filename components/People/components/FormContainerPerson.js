@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import * as R from "ramda";
 import { connect } from "react-redux";
-import { saveFormPerson, loadConfigs, setVar } from "../../actions";
-import { getSelectedPerson } from "../../reducers";
+import { saveFormPerson, loadConfigs, setVar } from "../actions";
+import { getSelectedPerson } from "../../GiftLog/reducers";
 
-import Form from "./Form";
+import Form from "../../GiftLog/components/Form/Form";
 import {
   fieldsPerson,
   registryStatuses,
   activeStatuses,
   recurringStatuses
-} from "../../common/data";
+} from "../../GiftLog/common/data";
 
 /* to do   add array of configs from a parent wrapper */
 class FormContainerPerson extends Component {
@@ -134,32 +134,6 @@ class FormContainerPerson extends Component {
     console.log("changeDate f");
     console.table(obj);
     let newDate, d;
-
-    let emptyObj = this.emptyVals(fields);
-    //  if (!obj.birthDate) {
-    //  return obj;
-    //}
-    try {
-      //  let d = obj.birthDate;
-      d = obj.birthDate.replace(/\//g, "");
-      if (d.length === 8) {
-        newDate = d.slice(4, 6) + d.slice(6, 8) + d.slice(0, 4);
-      } else if (d.length === 6) {
-        newDate = d.slice(2, 4) + d.slice(4, 6) + d.slice(0, 2);
-      }
-    } catch (e) {
-      console.log("CATCH " + e.message);
-    }
-    let returnObj = { ...emptyObj, ...obj, birthDate: d ? d : "" };
-    console.log(JSON.stringify(returnObj));
-    console.table(returnObj);
-    return returnObj;
-  };
-  /*
-  formatDate = (obj, fields) => {
-    console.log("changeDate f");
-    console.table(obj);
-    let newDate, d;
     let emptyObj = this.emptyVals(fields);
 
     try {
@@ -175,8 +149,6 @@ class FormContainerPerson extends Component {
     console.table(returnObj);
     return returnObj;
   };
-  */
-
   emptyVals = fields => {
     let emptyObj = {};
     const arrKeys = R.map(x => x.name, fields);
@@ -195,7 +167,7 @@ class FormContainerPerson extends Component {
         {
           <Form
             fields={fieldsPerson}
-            data={this.formatDate(selectedPerson, fieldsPerson)}
+            data={this.formatDate(this.props.selectedPerson, fieldsPerson)}
             onSave={this.save}
             //  showNew={this.showNew()}
             showNew={true}
@@ -208,12 +180,18 @@ class FormContainerPerson extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  //giftEventTypes: state.giftLog.eventTypes ? state.giftLog.eventTypes : null,
-  selectedPerson: getSelectedPerson(state)
+  selectedPerson:
+    state.giftLog.selectedPerson && state.giftLog.searchResults
+      ? R.find(
+          x => x.uuid === state.giftLog.selectedPerson,
+          state.giftLog.searchResults
+        )
+      : ""
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   saveForm: obj => {
+    console.log(JSON.stringify(obj));
     dispatch(saveFormPerson(obj, "TBD?"));
   },
   loadConfigs: () => {

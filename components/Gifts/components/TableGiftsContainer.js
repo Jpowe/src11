@@ -198,6 +198,15 @@ class TableContainer extends Component {
     console.log(value);
     this.setState(prevState => ({ eventType: value }));
   };
+  onUpdate = (col, reqID, giftID, obj) => {
+    console.log("TGC onUpdate ");
+    let giftUUID = giftID
+      ? giftID
+      : this.props.currentGiftUUID
+        ? this.props.currentGiftUUID
+        : null;
+    this.props.onUpdate(col, reqID, giftUUID, obj);
+  };
 
   render() {
     return (
@@ -236,7 +245,7 @@ class TableContainer extends Component {
               submittable={this.props.submittable}
               onSort={this.onSort}
               totalRows={this.props.totalRows}
-              onUpdate={this.props.onUpdate}
+              onUpdate={this.onUpdate}
               rowType="RowMain"
               personalAssts={this.props.personalAssistants}
             />
@@ -418,8 +427,10 @@ const mapStateToProps = (state, ownProps) => ({
   eTypes: state.giftLog.eventTypes,
   personalAssistants: state.giftLog.personalAssistants
     ? state.giftLog.personalAssistants
+    : null,
+  currentGiftUUID: state.giftLog.currentGiftUUID
+    ? state.giftLog.currentGiftUUID
     : null
-  //  mainFilter: state.glogInput.mainFilter ? state.glogInput.mainFilter : null
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onselected: (id, obj) => {
@@ -439,9 +450,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     console.log("col " + col);
     console.table(obj);
     console.log("giftUUID " + giftID);
-    console.table(getCurrentGift());
+
     if (!giftID) {
-      dispatch(saveFormGift2({}.true));
+      dispatch(saveFormGift2({}, true));
     }
     if (col === "status") {
       dispatch(
@@ -451,7 +462,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       );
     } else {
       dispatch(
-        updateRowAssign(giftID, {
+        updateRowAssign(reqID, giftID, {
           assignedTo: obj
         })
       );

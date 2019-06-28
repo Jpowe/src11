@@ -261,14 +261,19 @@ export default class Row extends React.Component {
             isInExpandedRows() && <ExpandLess style={styles.expand} />}
           {collapseRow &&
             !isInExpandedRows() && <ExpandMore style={styles.expand} />}
-          {!collapseRow && this.showDropDown(data.status)}
+          {!collapseRow && data.gift19 && this.showDropDown(data.status)}
+          {!collapseRow &&
+            !data.gift19 && <div style={{ minWidth: "200px" }} />}
           {collapseRow && <div style={{ minWidth: "200px" }} />}
 
           {!collapseRow &&
+            data.gift19 &&
             this.showDropDownAssignedTo(
               this.props.personalAssts,
               this.state.assignedTo
             )}
+          {!collapseRow &&
+            !data.gift19 && <div style={{ minWidth: "200px" }} />}
           {collapseRow && <div style={{ minWidth: "203px" }} />}
           {!collapseRow && this.renderCells(data)}
           {collapseRow && this.renderCells(this.changeParties(data))}

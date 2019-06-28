@@ -4,7 +4,7 @@ import GeneologyComponent from "./Geneology/Geneology";
 import FieldText from "./FieldText";
 import TableContainer from "./Search/TableContainer";
 import PersonForm from "./Form/FormContainerPerson";
-import GroupOrgForm from "./Form/FormContainerOrg";
+import OrgForm from "./Form/FormContainerOrg";
 import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 import FlatButton from "material-ui/FlatButton";
 
@@ -35,6 +35,10 @@ class GeneologyScreen extends Component {
   onRadio = (event, value) => {
     console.log(value);
     this.setState(prevState => ({ searchType: value }));
+    this.setState({
+      filterStr: null
+    });
+    this.props.onSearchText("randomstringNoResults");
     this.props.onSearchType(value);
   };
 
@@ -78,15 +82,14 @@ class GeneologyScreen extends Component {
             zIndex: 2
           };
     };
-    const renderLabelStyle = (a, b) => {
-      return a == b ? { opacity: 1 } : { opacity: 0.3 };
-    };
+    const renderLabelStyle = { opacity: 1 };
+
     return (
       <div>
         <FlatButton
           onClick={() => this.handleChangeTabs(value)}
-          label={value}
-          labelStyle={renderLabelStyle(this.state.tab, R.toUpper(value))}
+          label={value === "FORM" ? "EDIT" : value}
+          labelStyle={renderLabelStyle}
           style={sty(this.state.tab, value)}
           //disabled={this.state.tab == value}
         />
@@ -145,7 +148,8 @@ class GeneologyScreen extends Component {
                     }}
                   >
                     <RadioButton value="person" label="People" />
-                    <RadioButton value="groupOrg" label="Groups/Orgs" />
+                    <RadioButton value="org" label="Orgs" />
+                    <RadioButton value="group" label="Groups" />
                   </RadioButtonGroup>
                 </div>
                 <FieldText ontext={this.filterStr} />
@@ -158,8 +162,15 @@ class GeneologyScreen extends Component {
           )}
           {this.state.searchType === "person" &&
             this.state.tab !== "SEARCH" && <PersonForm />}
-          {this.state.searchType === "groupOrg" &&
-            this.state.tab !== "SEARCH" && <GroupOrgForm />}
+          {this.state.searchType === "org" &&
+            this.state.tab !== "SEARCH" && <OrgForm />}
+          {this.state.searchType === "group" &&
+            this.state.tab !== "SEARCH" && (
+              <div style={{ padding: "12px" }}>
+                <hr />
+                NO EDITING OR CREATING OF GROUPS. BLAME FRED
+              </div>
+            )}
         </div>
       </div>
     );

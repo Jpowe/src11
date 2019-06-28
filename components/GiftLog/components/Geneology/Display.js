@@ -28,13 +28,22 @@ class Display extends Component {
   }
 
   showBlock(obj, top, left, className, color = "#f30", personPartyType) {
+    console.log(obj.name);
+    const shortenName = obj => {
+      console.log(R.prop("name", obj).length);
+      const lngth = R.prop("name", obj).length;
+      return lngth > 15
+        ? R.prop("name", obj).slice(0, 14) + "..."
+        : R.prop("name", obj);
+    };
+    const shortName = shortenName(obj);
     return (
       <Block
         className={className}
         top={top}
         left={left}
         color={color}
-        data={obj.name}
+        data={shortName}
         uuid={obj.uuid}
         onclick={this.props.setCurrentSelection}
         key={obj.uuid}

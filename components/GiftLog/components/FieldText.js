@@ -20,6 +20,10 @@ class FieldText extends Component {
   bubbleUp = (value, name) => {
     this.props.ontext(value);
   };
+  onfocus = () => {
+    console.log("FieldText onfocus");
+    this.setState({ value: "" });
+  };
   render() {
     const { obj } = this.props;
     return (
@@ -36,6 +40,7 @@ class FieldText extends Component {
           name={obj ? obj.name : null}
           style={{ width: "600px", fontSize: "20px", backgroundColor: "#eee" }}
           underlineShow={true}
+          onFocus={() => this.onfocus()}
           //underlineFocusStyle={{ borderColor: "#f58c32" }}
         />
       </div>

@@ -957,12 +957,13 @@ export const saveFormGift2 = (payload, create) => async (
     );
 
     dispatch(setVar("gifts", syncToGifts));
+    dispatch(setVar("currentGiftUUID", id));
   }
 
   const giftEvent = await HTTP_GIFT_LOG.getGiftEvent(token, R.prop("uuid", ge));
   dispatch(updateGiftEvent(giftEvent.GiftEvent, "giftEvents"));
 
-  //  dispatch(getGiftEventsByMonth(getState().giftLog.monthFilter));
+  //dispatch(getGiftEventsByMonth(getState().giftLog.monthFilter));
 
   /*
 
@@ -1145,13 +1146,26 @@ export const updateRow = (reqID, giftID, payload) => async (
     giftID,
     payload
   );
+  let rows = getState().giftLog.gifts;
+  let r = R.find(x => x.id === reqID, rows);
+  let newRows = R.filter(x => x.id !== reqID, rows);
+  newRows = [...newRows, { ...r, status: payload.status }];
+  console.table(newRows);
+  dispatch(setVar("gifts", newRows));
 };
-export const updateRowAssign = (giftID, payload) => async (
+
+export const updateRowAssign = (reqID, giftID, payload) => async (
   dispatch,
   getState
 ) => {
   const token = getState().notifications.token;
   const ge = await HTTP_GIFT_LOG.updateGift(token, giftID, payload);
+  let rows = getState().giftLog.gifts;
+  let r = R.find(x => x.id === reqID, rows);
+  let newRows = R.filter(x => x.id !== reqID, rows);
+  newRows = [...newRows, { ...r, assignedTo: payload.assignedTo }];
+  console.table(newRows);
+  dispatch(setVar("gifts", newRows));
 };
 
 export const addLocation = (

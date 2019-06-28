@@ -42,7 +42,6 @@ class GiftRequestView extends Component {
           <div style={{ display: "flex", alignItems: "center" }}>
             <div
               style={{
-                textDecoration: "underline",
                 fontVariant: "small-caps",
                 marginRight: "20px"
               }}

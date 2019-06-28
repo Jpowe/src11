@@ -209,9 +209,10 @@ export default class Row extends React.Component {
         >
           <Edit
             style={{
-              cursor: "pointer"
+              cursor: "pointer",
+              paddingLeft: "8px"
             }}
-            onClick={this.props.onEdit}
+            onClick={() => this.props.onEdit(data.uuid)}
           />
           {this.renderCells(data)}
         </div>

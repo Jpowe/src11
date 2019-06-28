@@ -15,25 +15,50 @@ class GiftPopupContainer extends Component {
   render() {
     return (
       <div>
-        <div>
-          <span style={{ fontVariant: "small-caps", marginRight: "20px" }}>
-            Request:{" "}
-          </span>
-          <span>{this.props.request}</span>
-          <hr />
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ fontVariant: "small-caps", marginRight: "20px" }}>
+            Request:
+          </div>
+          <div style={{ marginRight: "40px" }}>{this.props.request}</div>
+          <div style={{ fontVariant: "small-caps", marginRight: "20px" }}>
+            Party(ies):
+          </div>
+          <div>{this.props.parties.join(", ")}</div>
         </div>
+        <hr />
       </div>
     );
   }
 }
 
+const getRequestProperty = (gifts, currentGiftRequest, property) => {
+  console.log("currentGiftRequest " + currentGiftRequest);
+  const temp = R.find(x => x.id === currentGiftRequest, gifts);
+  console.table(temp);
+  return R.prop(property, R.find(x => x.id === currentGiftRequest, gifts));
+};
+/*
 const getRequest = (gifts, currentGiftRequest) => {
   console.log("currentGiftRequest " + currentGiftRequest);
-  return R.prop("request", R.find(x => x.id === currentGiftRequest, gifts));
+
+  return R.prop("geParties", R.find(x => x.id === currentGiftRequest, gifts));
 };
+*/
+
 const mapStateToProps = (state, ownProps) => ({
   request: state.giftLog.gifts
-    ? getRequest(state.giftLog.gifts, state.giftLog.currentGiftRequest)
+    ? getRequestProperty(
+        state.giftLog.gifts,
+        state.giftLog.currentGiftRequest,
+        "request"
+      )
+    : null,
+  parties: state.giftLog.gifts
+    ? getRequestProperty(
+        state.giftLog.gifts,
+        state.giftLog.currentGiftRequest,
+        "party"
+      )
     : null
 });
 

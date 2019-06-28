@@ -110,10 +110,15 @@ class TableContainer extends Component {
   };
   rowsFiltered = rows => {
     console.table(rows);
-    console.log("rowsFiltered " + this.props.rowsSelected);
+    console.log("rowsSelected " + this.props.rowsSelected);
     return this.props.rowSelected
       ? R.filter(x => x.uuid === this.props.rowSelected, rows)
       : rows;
+  };
+  onEdit = (view, id) => {
+    console.log("onEdit " + [view, id]);
+    this.props.onEdit(id);
+    this.props.onView("formPerson");
   };
   render() {
     console.log("TC render f");
@@ -121,39 +126,52 @@ class TableContainer extends Component {
     return (
       <div style={{ maxHeight: "400px", overflow: "auto" }}>
         {this.props.rows && this.props.rows.length ? (
-          <Table
-            columns={
-              !this.props.submittable
-                ? R.compose(
-                    this.sortColumns,
-                    this.removeSubmitColumn
-                  )(this.getColumns(searchType))
-                : this.sortColumns(this.getColumns(searchType))
-            }
-            rows={this.rowsFiltered(this.props.rows)}
-            rollOverColor="#9ccc65"
-            stripeRows={true}
-            stripeRowsColor="#A4AECB"
-            sortable={false}
-            selectable={true}
-            multiselect={false}
-            selectColor={"#DF5C33"}
-            paginated={this.state.bPaginated}
-            onPaginated={this.paginated}
-            page={this.state.page}
-            perPage={this.state.perPage}
-            onselected={this.onSelected}
-            onselected2={this.onSelected2}
-            submittable={this.props.submittable}
-            onSort={this.onSort}
-            totalRows={this.props.totalRows}
-            onUpdate={this.props.onUpdate}
-            rowType="Row"
-            onselect={this.onRowSelected}
-            onEdit={() => this.props.onView("formPerson")}
-          />
+          <div>
+            <Table
+              columns={
+                !this.props.submittable
+                  ? R.compose(
+                      this.sortColumns,
+                      this.removeSubmitColumn
+                    )(this.getColumns(searchType))
+                  : this.sortColumns(this.getColumns(searchType))
+              }
+              rows={this.rowsFiltered(this.props.rows)}
+              rollOverColor="#9ccc65"
+              stripeRows={true}
+              stripeRowsColor="#A4AECB"
+              sortable={false}
+              selectable={true}
+              multiselect={false}
+              selectColor={"#DF5C33"}
+              paginated={this.state.bPaginated}
+              onPaginated={this.paginated}
+              page={this.state.page}
+              perPage={this.state.perPage}
+              onselected={this.onSelected}
+              onselected2={this.onSelected2}
+              submittable={this.props.submittable}
+              onSort={this.onSort}
+              totalRows={this.props.totalRows}
+              onUpdate={this.props.onUpdate}
+              rowType="Row"
+              onselect={this.onRowSelected}
+              onEdit={id => this.onEdit("formPerson", id)}
+              //onEdit={this.props.onEdit}
+            />
+          </div>
         ) : (
-          <div style={{ marginLeft: "200px" }} />
+          this.props.rows !== null && (
+            <div
+              style={{
+                marginLeft: "8px",
+                fontStyle: "italic",
+                color: "#DF5C33"
+              }}
+            >
+              No results
+            </div>
+          )
         )}
       </div>
     );
@@ -176,6 +194,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   getPersonGifts: id => {
     dispatch(getPersonGifts(id));
+    dispatch(setVar("selectedPerson", id));
+  },
+  onEdit: id => {
     dispatch(setVar("selectedPerson", id));
   }
 });

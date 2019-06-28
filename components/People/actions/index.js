@@ -462,9 +462,11 @@ export const getPersonGifts = id => async (dispatch, getState) => {
   const token = getState().notifications.token;
   //"45fe78d5-1229-4ff1-aad5-c6f6dc814fe2"
   //"ab76417c-024b-43f2-a2b8-47b776386196"
+  dispatch(setVar("LOADING_personGifts", true));
   let { Person } = await HTTP_GIFT_LOG.getPersonGifts(token, id);
   console.table(Person.giftEvents);
   dispatch(setVar("personGifts", Person.giftEvents));
+  dispatch(setVar("LOADING_personGifts", false));
 };
 
 export const searchText = arr => ({
@@ -719,10 +721,25 @@ export const saveFormPerson = payload => async (dispatch, getState) => {
     birthDate: formatDateYYMMDD(payload.birthDate),
     gender: getGenderName(payload.gender)
   };
+
+  /*
+  const kys = R.keys(newPayload);
+  newPayload = R.map(
+    x =>
+      R.prop(x, newPayload)
+        ? R.prop(x, newPayload).trim()
+        : R.prop(x, newPayload),
+    kys
+  );
+  */
   if (selectedPerson) {
     await HTTP_GIFT_LOG.updatePerson(token, selectedPerson, newPayload);
   } else {
-    await HTTP_GIFT_LOG.createPerson(token, newPayload);
+    let cp = await HTTP_GIFT_LOG.createPerson(token, newPayload);
+    let uuid = R.path(["CreatePerson", "uuid"], cp);
+    console.log("uuuid " + uuid);
+    dispatch(setVar("selectedPerson", uuid));
+    dispatch(setVar("searchResults", [{ uuid: uuid, ...newPayload }]));
   }
 };
 

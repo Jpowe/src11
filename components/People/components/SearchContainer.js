@@ -26,6 +26,7 @@ class SearchContainer extends Component {
           onSearchText={this.searchText}
           onSearchType={this.searchType}
           rows={this.props.rows}
+          loading={this.props.loading}
         />
       </div>
     );
@@ -33,7 +34,8 @@ class SearchContainer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  rows: state.giftLog.personGifts ? state.giftLog.personGifts : []
+  rows: state.giftLog.personGifts ? state.giftLog.personGifts : [],
+  loading: state.giftLog.LOADING_personGifts
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
   search: (str, typ) => {

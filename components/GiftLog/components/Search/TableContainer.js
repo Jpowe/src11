@@ -22,7 +22,8 @@ class TableContainer extends Component {
       page: 0,
       perPage: 3,
       totalRows: null,
-      bPaginated: false
+      bPaginated: false,
+      showGeneologyFunctionality: false
     };
   }
   componentDidMount() {
@@ -99,7 +100,17 @@ class TableContainer extends Component {
   };
   getColumns = node => {
     console.log("getColumns node: " + node);
-
+    let personCols, orgCols;
+    const filterOutGenie = cols => {
+      return R.filter(
+        x => !R.contains(x.name, ["addParent", "addPartner", "addChild"]),
+        cols
+      );
+    };
+    //showGeneologyFunctionality
+    if (!this.state.showGeneologyFunctionality) {
+      return node == "person" ? filterOutGenie(columnsPerson) : columnsOrg;
+    }
     return node == "person" ? columnsPerson : columnsOrg;
   };
   render() {

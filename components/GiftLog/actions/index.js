@@ -462,9 +462,20 @@ export const searchText = arr => ({
   payload: arr
 });
 
-export const searchGroupOrg = (str = "") => async (dispatch, getState) => {
+export const searchOrg = (str = "") => async (dispatch, getState) => {
+  console.log("ACTION searchOrg " + str);
+  if (str == "") {
+    return;
+  }
+  if (str.length < 3) {
+    return;
+  }
+  const token = getState().notifications.token;
+  let newSearchOrg = await HTTP_GIFT_LOG.searchOrganization(token, str);
+  dispatch(searchText(newSearchOrg.SearchOrganization));
+};
+export const searchGroup = (str = "") => async (dispatch, getState) => {
   console.log("ACTION searchGroup " + str);
-
   if (str == "") {
     return;
   }
@@ -473,32 +484,7 @@ export const searchGroupOrg = (str = "") => async (dispatch, getState) => {
   }
   const token = getState().notifications.token;
   let newSearchGroup = await HTTP_GIFT_LOG.searchGroup(token, str);
-  let newSearchOrg = await HTTP_GIFT_LOG.searchOrganization(token, str);
-  console.table(newSearchGroup);
-  console.table(newSearchOrg);
-
-  const combinedData = (groups, orgs) => {
-    console.log("combinedData");
-    console.log(R.isEmpty(groups));
-    console.log(R.isEmpty(orgs));
-    let data = [];
-    const addPartyType = (obj, partyType) => {
-      return { ...obj, partyType: partyType };
-    };
-    data.push(R.map(x => addPartyType(x, "group"), groups));
-    data.push(R.map(x => addPartyType(x, "org"), orgs));
-    console.table(R.flatten(data));
-    return R.flatten(data);
-  };
-
-  console.table(
-    combinedData(newSearchGroup.SearchGroup, newSearchOrg.SearchOrganization)
-  );
-  dispatch(
-    searchText(
-      combinedData(newSearchGroup.SearchGroup, newSearchOrg.SearchOrganization)
-    )
-  );
+  dispatch(searchText(newSearchGroup.SearchGroup));
 };
 
 export const search = (str = "", searchType = "person") => async (
@@ -512,8 +498,10 @@ export const search = (str = "", searchType = "person") => async (
   }
   if (searchType === "person") {
     dispatch(searchPerson(str));
-  } else if (searchType == "groupOrg") {
-    dispatch(searchGroupOrg(str));
+  } else if (searchType == "org") {
+    dispatch(searchOrg(str));
+  } else if (searchType == "group") {
+    dispatch(searchGroup(str));
   }
 };
 /*
@@ -693,7 +681,7 @@ export const saveFormPerson = payload => async (dispatch, getState) => {
   const token = getState().notifications.token;
   const getGenderName = n => {
     if (!n) {
-      return { name: "Unknown", value: 3 };
+      return "Unknown";
     }
     const genderJSON = [
       { name: "Female", value: 1 },
@@ -712,7 +700,10 @@ export const saveFormPerson = payload => async (dispatch, getState) => {
   if (selectedPerson) {
     await HTTP_GIFT_LOG.updatePerson(token, selectedPerson, newPayload);
   } else {
-    await HTTP_GIFT_LOG.createPerson(token, newPayload);
+    let cp = await HTTP_GIFT_LOG.createPerson(token, newPayload);
+    let uuid = R.path(["CreatePerson", "uuid"], cp);
+    console.log("uuuid " + uuid);
+    dispatch(setVar("selectedPerson", uuid));
   }
 };
 

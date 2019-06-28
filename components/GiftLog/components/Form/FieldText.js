@@ -97,7 +97,7 @@ class FieldText extends Component {
         <TextField
           value={this.format(this.state.data, this.props.type)}
           hintText={obj.title}
-          floatingLabelText={obj.title}
+          floatingLabelText={obj.required ? `${obj.title} *` : obj.title}
           errorText={this.validate(this.state.data, this.props.type)}
           fullWidth={false}
           multiLine={this.props.multiLine}

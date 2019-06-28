@@ -23,7 +23,8 @@ class Header extends React.Component {
             color: this.props.muiTheme.palette.accent3Color,
             fontSize: "large",
             //  backgroundColor: "#ccc",
-            backgroundColor: "#B0BEC5"
+            backgroundColor: "#B0BEC5",
+            paddingLeft: "8px"
           }}
         >
           {this.props.data.map((d, i) => (

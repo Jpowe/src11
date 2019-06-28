@@ -23,6 +23,9 @@ export default class Table extends React.Component {
     };
   }
   componentWillReceiveProps(nextProps) {
+    if (nextProps.rows == this.state.rows) {
+      return;
+    }
     this.setState({
       rows: nextProps.rows,
       page: 0,
@@ -109,6 +112,10 @@ export default class Table extends React.Component {
     let w = Number(100 / this.props.columns.length) + `%`;
     return w;
   };
+  onEdit = id => {
+    console.log("onedit f " + id);
+    this.props.onEdit(id);
+  };
   getRows = (data, component) => {
     const RowType = componentFromProp("type");
 
@@ -131,7 +138,7 @@ export default class Table extends React.Component {
           this.props.onselect(uuid, typ, partyType)
         }
         cellWidth={this.colWidth()}
-        onEdit={this.props.onEdit}
+        onEdit={this.onEdit}
       />
     ));
   };
@@ -149,12 +156,16 @@ export default class Table extends React.Component {
       stripeRows,
       stripeRowsColor,
       paginated,
-      submittable
+      submittable,
+      totalRows
     } = this.props;
 
     return (
       <div style={{ minWidth: "1200px" }}>
         <Paper zDepth={2}>
+          <div
+            style={{ padding: "8px", fontStyle: "italic" }}
+          >{`Person search count: ${totalRows} `}</div>
           <Header
             data={columns}
             sortable={sortable}
@@ -162,18 +173,13 @@ export default class Table extends React.Component {
             cellWidth={this.colWidth()}
           />
 
-          <ReactCSSTransitionGroup
-            transitionName="example"
-            transitionEnterTimeout={100}
-            transitionLeaveTimeout={700}
-          >
-            {this.props.rowType == "RowMain" &&
-              this.props.rows &&
-              this.getRows(this.state.rows, RowMain)}
-            {this.props.rowType == "Row" &&
-              this.props.rows &&
-              this.getRows(this.state.rows, Row)}
-          </ReactCSSTransitionGroup>
+          {this.props.rowType == "RowMain" &&
+            this.props.rows &&
+            this.getRows(this.state.rows, RowMain)}
+          {this.props.rowType == "Row" &&
+            this.props.rows &&
+            this.getRows(this.state.rows, Row)}
+
           {this.props.paginated && (
             <Paginated
               currentPage={this.props.page + 1}
